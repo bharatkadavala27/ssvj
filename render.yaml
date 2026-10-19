@@ -37,5 +37,8 @@ services:
       # add that provider's key for real SMS.
       - key: SMS_PROVIDER
         value: console
+      # Testing phase: the app shows and fills in the login code. Set to false (or remove) before launch.
+      - key: SHOW_OTP
+        value: "true"
       - key: FAST2SMS_API_KEY
         sync: false
