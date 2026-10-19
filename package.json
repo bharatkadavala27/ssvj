@@ -1,0 +1,31 @@
+{
+  "name": "ssvj-backend",
+  "version": "1.0.0",
+  "description": "API for the SSVJ Sagar Samaj app",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seed/seed.js",
+    "create-admin": "node src/seed/create-admin.js",
+    "import-places": "node src/seed/import-places.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "cloudinary": "^2.11.0",
+    "compression": "^1.8.2",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^4.22.3",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "mongoose": "^8.24.5",
+    "morgan": "^1.12.1",
+    "multer": "^2.4.0",
+    "zod": "^3.25.76"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

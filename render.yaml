@@ -1,0 +1,41 @@
+# Render Blueprint for the SSVJ API (Dashboard → New → Blueprint → pick this repository).
+# Values marked `sync: false` are secrets: Render asks for them when the Blueprint is created.
+# The server pings its own /api/health every 10 minutes (src/lib/keepAlive.js) so the free plan
+# does not sleep; an UptimeRobot monitor on the same URL every 5 minutes is the backstop.
+services:
+  - type: web
+    name: ssvj-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --omit=dev
+    startCommand: node src/server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: MONGODB_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_KEY
+        generateValue: true
+      # Capacitor Android app (https://localhost) and local development; add the admin dashboard's
+      # address here once it is hosted.
+      - key: CORS_ORIGINS
+        value: https://localhost,capacitor://localhost,http://localhost:5173
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      # console = OTP codes appear only in the Render logs. Switch to fast2sms / msg91 / twilio and
+      # add that provider's key for real SMS.
+      - key: SMS_PROVIDER
+        value: console
+      - key: FAST2SMS_API_KEY
+        sync: false
