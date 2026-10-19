@@ -1,0 +1,2941 @@
+{
+  "district": {
+    "gu": "જુનાગઢ",
+    "en": "Junagadh"
+  },
+  "sources": [
+    "https://villageinfo.in/gujarat/junagadh/junagadh-city/",
+    "https://villageinfo.in/gujarat/junagadh/junagadh/",
+    "https://villageinfo.in/gujarat/junagadh/bhesan/",
+    "https://villageinfo.in/gujarat/junagadh/keshod/",
+    "https://villageinfo.in/gujarat/junagadh/malia-hatina/",
+    "https://villageinfo.in/gujarat/junagadh/manavadar/",
+    "https://villageinfo.in/gujarat/junagadh/mangrol/",
+    "https://villageinfo.in/gujarat/junagadh/mendarda/",
+    "https://villageinfo.in/gujarat/junagadh/vanthali/",
+    "https://villageinfo.in/gujarat/junagadh/visavadar/",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:જુનાગઢ_તાલુકાના_ગામો",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:ભેંસાણ_તાલુકાના_ગામ",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:કેશોદ_તાલુકાના_ગામ",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:માળીયા_હાટીના_તાલુકાના_ગામ",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:માણાવદર_તાલુકાના_ગામો",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:માંગરોળ_(જૂનાગઢ)_તાલુકાના_ગામો",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:મેંદરડા_તાલુકાના_ગામો",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:વંથલી_તાલુકાના_ગામો",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:વિસાવદર_તાલુકાના_ગામો",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Junagadh/sarpanch-list",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Junagadh/Statistics-Demographics",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Bhensan/sarpanch-details",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Bhensan/Statistics-Demographics",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Keshod/sarpancha-list",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/MaliyaHatina/Sarpanch-information",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/MaliyaHatina/Statistics-Demographics",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Manavadar/List-of-Talati-Com-sarpanch",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Manavadar/Statistics-Demographics",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Mangrol/list-of-sarpanchs",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Mendarada/detil-sarpanch",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Vanthali/sarpanch-list",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Visavadar/Sarpanch-Administrator",
+    "https://junagadhdp.gujarat.gov.in/gu/taluka/Visavadar/Statistics-Demographics",
+    "https://gu.wikipedia.org/wiki/ઢાંચો:જુનાગઢ_જીલ્લાના_તાલુકા",
+    "https://web.archive.org/web/2016/http://junagadhdp.gujarat.gov.in/junagadh/english/visavadar-taluka.htm",
+    "https://villageinfo.in/gujarat/amreli/bagasara/"
+  ],
+  "talukas": [
+    {
+      "gu": "જુનાગઢ શહેર",
+      "en": "Junagadh City",
+      "villages": [
+        {
+          "gu": "ખામધ્રોળ",
+          "en": "Khamdhrol",
+          "translit": false
+        },
+        {
+          "gu": "ચોબારી",
+          "en": "Chobari",
+          "translit": false
+        },
+        {
+          "gu": "જુનાગઢ",
+          "en": "Junagadh",
+          "translit": false
+        },
+        {
+          "gu": "જોષીપુરા",
+          "en": "Joshipura",
+          "translit": true
+        },
+        {
+          "gu": "ઝાંઝરડા",
+          "en": "Jhanjharda",
+          "translit": false
+        },
+        {
+          "gu": "ટીંબાવાડી",
+          "en": "Timba Vadi",
+          "translit": true
+        },
+        {
+          "gu": "દોલતપરા",
+          "en": "Dolatpara",
+          "translit": false
+        },
+        {
+          "gu": "ભવનાથ",
+          "en": "Bhavnath",
+          "translit": false
+        },
+        {
+          "gu": "સરગવાડા",
+          "en": "Saragvada",
+          "translit": false
+        },
+        {
+          "gu": "સાબલપુર",
+          "en": "Sabalpur",
+          "translit": true
+        }
+      ]
+    },
+    {
+      "gu": "જુનાગઢ ગ્રામ્ય",
+      "en": "Junagadh Rural",
+      "villages": [
+        {
+          "gu": "અવતડીયા નાના",
+          "en": "Avatadiya Nana",
+          "translit": false
+        },
+        {
+          "gu": "અવતડીયા મોટા",
+          "en": "Avatadiya Mota",
+          "translit": false
+        },
+        {
+          "gu": "આંબલીયા",
+          "en": "Ambaliya",
+          "translit": false
+        },
+        {
+          "gu": "આણંદપુર",
+          "en": "Anandpur",
+          "translit": false
+        },
+        {
+          "gu": "ઇંટાળા",
+          "en": "Intala",
+          "translit": false
+        },
+        {
+          "gu": "ઇન્દ્રેશ્વર",
+          "en": "Indreshvar",
+          "translit": true
+        },
+        {
+          "gu": "ઇવનગર",
+          "en": "Ivnagar",
+          "translit": false
+        },
+        {
+          "gu": "ઇશાપુર",
+          "en": "Isapur",
+          "translit": false
+        },
+        {
+          "gu": "ઉમરાળા",
+          "en": "Umrala",
+          "translit": false
+        },
+        {
+          "gu": "કાથરોટા",
+          "en": "Kathrota",
+          "translit": false
+        },
+        {
+          "gu": "કેરાળા",
+          "en": "Kerala",
+          "translit": false
+        },
+        {
+          "gu": "ખડીયા",
+          "en": "Khadiya",
+          "translit": false
+        },
+        {
+          "gu": "ખલીલપુર",
+          "en": "Khalilpur",
+          "translit": false
+        },
+        {
+          "gu": "ગલીયાવાડા",
+          "en": "Galiyavada",
+          "translit": false
+        },
+        {
+          "gu": "ગિરનાર હિલ્સ",
+          "en": "Girnar Hills",
+          "translit": true
+        },
+        {
+          "gu": "ગોલાધર",
+          "en": "Goladhar",
+          "translit": false
+        },
+        {
+          "gu": "ચોકલી",
+          "en": "Chokli",
+          "translit": false
+        },
+        {
+          "gu": "ચોકી",
+          "en": "Choki",
+          "translit": false
+        },
+        {
+          "gu": "ચોરવાડી",
+          "en": "Chorvadi",
+          "translit": false
+        },
+        {
+          "gu": "જાંબુડી",
+          "en": "Jambudi",
+          "translit": false
+        },
+        {
+          "gu": "જામકા",
+          "en": "Jamka",
+          "translit": false
+        },
+        {
+          "gu": "ઝાલણસર",
+          "en": "Jhalansar",
+          "translit": false
+        },
+        {
+          "gu": "ડુંગર થાણા",
+          "en": "Dungar Thana",
+          "translit": true
+        },
+        {
+          "gu": "ડુંગરપુર",
+          "en": "Dungarpur",
+          "translit": false
+        },
+        {
+          "gu": "ડેરવાણ",
+          "en": "Dervan",
+          "translit": false
+        },
+        {
+          "gu": "તલીયાધર",
+          "en": "Taliyadhar",
+          "translit": false
+        },
+        {
+          "gu": "તોરણીયા",
+          "en": "Toraniya",
+          "translit": false
+        },
+        {
+          "gu": "થુંબાળા",
+          "en": "Thumbala",
+          "translit": false
+        },
+        {
+          "gu": "દાતાર હિલ્સ",
+          "en": "Datar Hills",
+          "translit": true
+        },
+        {
+          "gu": "નવા પીપળીયા",
+          "en": "Nava Pipaliya",
+          "translit": false
+        },
+        {
+          "gu": "નવાગામ",
+          "en": "Navagam",
+          "translit": false
+        },
+        {
+          "gu": "પત્રાપસર",
+          "en": "Patrapsar",
+          "translit": false
+        },
+        {
+          "gu": "પલાસવા",
+          "en": "Palasva",
+          "translit": false
+        },
+        {
+          "gu": "પાતાપુર",
+          "en": "Patapur",
+          "translit": false
+        },
+        {
+          "gu": "પાદરીયા",
+          "en": "Padariya",
+          "translit": false
+        },
+        {
+          "gu": "પીપરડી ટીંબો",
+          "en": "Pipardi Timbo",
+          "translit": false
+        },
+        {
+          "gu": "પ્રભાતપુર",
+          "en": "Prabhatpur",
+          "translit": false
+        },
+        {
+          "gu": "બંધાળા",
+          "en": "Bandhala",
+          "translit": false
+        },
+        {
+          "gu": "બગડુ",
+          "en": "Bagdu",
+          "translit": false
+        },
+        {
+          "gu": "બલીયાવાડ",
+          "en": "Baliyavad",
+          "translit": false
+        },
+        {
+          "gu": "બાદલપુર",
+          "en": "Badalpur",
+          "translit": false
+        },
+        {
+          "gu": "બામણગામ",
+          "en": "Bamangam",
+          "translit": false
+        },
+        {
+          "gu": "બિલખા",
+          "en": "Bilkha",
+          "translit": false
+        },
+        {
+          "gu": "બેલા",
+          "en": "Bela",
+          "translit": false
+        },
+        {
+          "gu": "બોરદેવી",
+          "en": "Bordevi",
+          "translit": true
+        },
+        {
+          "gu": "ભલગામ",
+          "en": "Bhalgam",
+          "translit": false
+        },
+        {
+          "gu": "ભિયાળ",
+          "en": "Bhiyal",
+          "translit": false
+        },
+        {
+          "gu": "મંડલીકપુર",
+          "en": "Mandlikpur",
+          "translit": false
+        },
+        {
+          "gu": "મજેવડી",
+          "en": "Majevdi",
+          "translit": false
+        },
+        {
+          "gu": "માંડણપરા",
+          "en": "Mandanpara",
+          "translit": false
+        },
+        {
+          "gu": "માખીયાળા",
+          "en": "Makhiyala",
+          "translit": false
+        },
+        {
+          "gu": "મેવાસા કમરી",
+          "en": "Mevasa Kamribaina",
+          "translit": false
+        },
+        {
+          "gu": "મેવાસા ખડીયા",
+          "en": "Mevasa Khadiya",
+          "translit": false
+        },
+        {
+          "gu": "રામનાથ",
+          "en": "Ramnath",
+          "translit": false
+        },
+        {
+          "gu": "રામેશ્વર",
+          "en": "Rameshvar",
+          "translit": false
+        },
+        {
+          "gu": "રૂપાવટી",
+          "en": "Rupavati",
+          "translit": false
+        },
+        {
+          "gu": "લીંબડી ધાર",
+          "en": "Limbdi Dhar",
+          "translit": true
+        },
+        {
+          "gu": "વડાલ",
+          "en": "Vadal",
+          "translit": false
+        },
+        {
+          "gu": "વધાવી",
+          "en": "Vadhavi",
+          "translit": false
+        },
+        {
+          "gu": "વાડાસીમડી",
+          "en": "Vadasimdi",
+          "translit": false
+        },
+        {
+          "gu": "વાણંદીયા",
+          "en": "Vanandiya",
+          "translit": false
+        },
+        {
+          "gu": "વિજાપુર",
+          "en": "Vijapur",
+          "translit": false
+        },
+        {
+          "gu": "વિરપુર",
+          "en": "Virpur",
+          "translit": false
+        },
+        {
+          "gu": "સણાથા",
+          "en": "Sanatha",
+          "translit": false
+        },
+        {
+          "gu": "સાંખડાવદર",
+          "en": "Sankhdavadar",
+          "translit": false
+        },
+        {
+          "gu": "સાગડીવિડી",
+          "en": "Sagdividi",
+          "translit": false
+        },
+        {
+          "gu": "સુખપુર",
+          "en": "Sukhpur",
+          "translit": false
+        },
+        {
+          "gu": "સુરજકુંડ",
+          "en": "Surajkund",
+          "translit": true
+        },
+        {
+          "gu": "સેમરાળા",
+          "en": "Semrala",
+          "translit": false
+        },
+        {
+          "gu": "સોડવદર",
+          "en": "Sodvadar",
+          "translit": false
+        },
+        {
+          "gu": "હસ્નાપુર",
+          "en": "Hasnapur",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "ભેંસાણ",
+      "en": "Bhesan",
+      "villages": [
+        {
+          "gu": "ઉમરાળી",
+          "en": "Umrali",
+          "translit": false
+        },
+        {
+          "gu": "કરિયા",
+          "en": "Kariya",
+          "translit": false
+        },
+        {
+          "gu": "કાળા ગડબા",
+          "en": "Kala Gadba",
+          "translit": false
+        },
+        {
+          "gu": "ખંભાળીયા",
+          "en": "Khambhaliya",
+          "translit": false
+        },
+        {
+          "gu": "ખારચીયા",
+          "en": "Kharachiya",
+          "translit": false
+        },
+        {
+          "gu": "ગળથ",
+          "en": "Galath",
+          "translit": false
+        },
+        {
+          "gu": "ગોરખપુર",
+          "en": "Gorakhpur",
+          "translit": false
+        },
+        {
+          "gu": "ગોરવીયાળી",
+          "en": "Gorviyali",
+          "translit": false
+        },
+        {
+          "gu": "ચણાકા",
+          "en": "Chanaka",
+          "translit": false
+        },
+        {
+          "gu": "ચૂડા",
+          "en": "Chuda",
+          "translit": false
+        },
+        {
+          "gu": "છોડવડી",
+          "en": "Chhodvadi",
+          "translit": false
+        },
+        {
+          "gu": "જુની ધારી ગુંદાળી",
+          "en": "Juni Dhari Gundali",
+          "translit": false
+        },
+        {
+          "gu": "ડમરાળા",
+          "en": "Damrala",
+          "translit": false
+        },
+        {
+          "gu": "ઢોળવા",
+          "en": "Dholwa",
+          "translit": false
+        },
+        {
+          "gu": "દુધાળા",
+          "en": "Dudhala",
+          "translit": false
+        },
+        {
+          "gu": "નવા વાઘણીયા",
+          "en": "Nava Vaghaniya",
+          "translit": false
+        },
+        {
+          "gu": "નવી ધારી ગુંદાળી",
+          "en": "Navi Dhari Gundali",
+          "translit": false
+        },
+        {
+          "gu": "નાના ગુજરીયા",
+          "en": "Nana Gujariya",
+          "translit": false
+        },
+        {
+          "gu": "પતુરણ",
+          "en": "Paturan",
+          "translit": false
+        },
+        {
+          "gu": "પરબ વાવડી",
+          "en": "Parab Vavdi",
+          "translit": false
+        },
+        {
+          "gu": "પસવાળા",
+          "en": "Paswala",
+          "translit": false
+        },
+        {
+          "gu": "પાટલા",
+          "en": "Patla",
+          "translit": false
+        },
+        {
+          "gu": "પાટવડ",
+          "en": "Patwad",
+          "translit": false
+        },
+        {
+          "gu": "પીપળીયા તડકા",
+          "en": "Pipaliya Tadka",
+          "translit": false
+        },
+        {
+          "gu": "બરવાળા",
+          "en": "Barwala",
+          "translit": false
+        },
+        {
+          "gu": "બામણગઢ",
+          "en": "Bamangadh",
+          "translit": false
+        },
+        {
+          "gu": "ભાટગામ",
+          "en": "Bhatgam",
+          "translit": false
+        },
+        {
+          "gu": "ભેંસાણ",
+          "en": "Bhesan",
+          "translit": false
+        },
+        {
+          "gu": "મથુરા થાણા",
+          "en": "Mathura Thana",
+          "translit": false
+        },
+        {
+          "gu": "માંડવા",
+          "en": "Mandva",
+          "translit": false
+        },
+        {
+          "gu": "માલીડા",
+          "en": "Malida",
+          "translit": false
+        },
+        {
+          "gu": "મેંદપરા",
+          "en": "Mendpara",
+          "translit": false
+        },
+        {
+          "gu": "મોટા ગુજરીયા",
+          "en": "Mota Gujariya",
+          "translit": false
+        },
+        {
+          "gu": "મોરવાડા",
+          "en": "Morwada",
+          "translit": false
+        },
+        {
+          "gu": "રણશીવાવ",
+          "en": "Ranshivav",
+          "translit": false
+        },
+        {
+          "gu": "રતનપરા",
+          "en": "Ratanpara",
+          "translit": false
+        },
+        {
+          "gu": "રફાળીયા",
+          "en": "Rafaliya",
+          "translit": false
+        },
+        {
+          "gu": "રાણપુર",
+          "en": "Ranpur",
+          "translit": false
+        },
+        {
+          "gu": "વાંદરવડ",
+          "en": "Vandarvad",
+          "translit": false
+        },
+        {
+          "gu": "સરદારપુર",
+          "en": "Sardarpur",
+          "translit": false
+        },
+        {
+          "gu": "સાંકરોળા",
+          "en": "Sankrola",
+          "translit": false
+        },
+        {
+          "gu": "સામતપરા",
+          "en": "Samatpara",
+          "translit": false
+        },
+        {
+          "gu": "સુખપુર",
+          "en": "Sukhpur",
+          "translit": false
+        },
+        {
+          "gu": "હડમતિયા ખજૂરી",
+          "en": "Hadmatiya Khajuri",
+          "translit": false
+        },
+        {
+          "gu": "હડમતિયા ખાખરા",
+          "en": "Hadmatiya Khakhra",
+          "translit": false
+        },
+        {
+          "gu": "હડમતિયા વિશાળ",
+          "en": "Hadmatiya Vishal",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "કેશોદ",
+      "en": "Keshod",
+      "villages": [
+        {
+          "gu": "અખોદડ",
+          "en": "Akhodad",
+          "translit": false
+        },
+        {
+          "gu": "અગતરાય",
+          "en": "Agatrai",
+          "translit": false
+        },
+        {
+          "gu": "અજાબ",
+          "en": "Ajab",
+          "translit": false
+        },
+        {
+          "gu": "ઇંદ્રાણા",
+          "en": "Indrana",
+          "translit": false
+        },
+        {
+          "gu": "ઇસરા",
+          "en": "Isra",
+          "translit": false
+        },
+        {
+          "gu": "એકલેરા",
+          "en": "Eklera",
+          "translit": false
+        },
+        {
+          "gu": "કણેરી",
+          "en": "Kaneri",
+          "translit": false
+        },
+        {
+          "gu": "કાલવાણી",
+          "en": "Kalavani",
+          "translit": false
+        },
+        {
+          "gu": "કેવદ્રા",
+          "en": "Kevadra",
+          "translit": false
+        },
+        {
+          "gu": "કેશોદ",
+          "en": "Keshod",
+          "translit": false
+        },
+        {
+          "gu": "કોયલાણા લાઠીયા",
+          "en": "Koyalana Lathiya",
+          "translit": false
+        },
+        {
+          "gu": "ખમીદાણા",
+          "en": "Khamidana",
+          "translit": false
+        },
+        {
+          "gu": "ખીરસરા",
+          "en": "Khirsara",
+          "translit": false
+        },
+        {
+          "gu": "ગેલાણા",
+          "en": "Gelana",
+          "translit": false
+        },
+        {
+          "gu": "ચર",
+          "en": "Char",
+          "translit": false
+        },
+        {
+          "gu": "ચાંદીગઢ",
+          "en": "Chandigadh",
+          "translit": false
+        },
+        {
+          "gu": "ચિત્રી",
+          "en": "Chitri",
+          "translit": false
+        },
+        {
+          "gu": "જોનપુર",
+          "en": "Jonpur",
+          "translit": false
+        },
+        {
+          "gu": "ટીટોડી",
+          "en": "Titodi",
+          "translit": false
+        },
+        {
+          "gu": "ડેરવાણ",
+          "en": "Dervan",
+          "translit": false
+        },
+        {
+          "gu": "ધ્રાબાવડ",
+          "en": "Dhrabavad",
+          "translit": false
+        },
+        {
+          "gu": "નાની ઘંસારી",
+          "en": "Nani Ghansari",
+          "translit": false
+        },
+        {
+          "gu": "નુનરડા",
+          "en": "Nunarda",
+          "translit": false
+        },
+        {
+          "gu": "નોંજણવાવ",
+          "en": "Nonjhanvav",
+          "translit": false
+        },
+        {
+          "gu": "પંચાળા",
+          "en": "Panchala",
+          "translit": false
+        },
+        {
+          "gu": "પસવાળીયા",
+          "en": "Pasvaliya",
+          "translit": false
+        },
+        {
+          "gu": "પાડોદર",
+          "en": "Padodar",
+          "translit": false
+        },
+        {
+          "gu": "પાણખાણ",
+          "en": "Pankhan",
+          "translit": false
+        },
+        {
+          "gu": "પિપળી",
+          "en": "Pipli",
+          "translit": false
+        },
+        {
+          "gu": "પ્રાંસલી",
+          "en": "Pransli",
+          "translit": false
+        },
+        {
+          "gu": "ફાગળી",
+          "en": "Fagli",
+          "translit": false
+        },
+        {
+          "gu": "બડોદર",
+          "en": "Badodar",
+          "translit": false
+        },
+        {
+          "gu": "બામણાસા",
+          "en": "Bamnasa",
+          "translit": false
+        },
+        {
+          "gu": "બાલાગામ",
+          "en": "Balagam",
+          "translit": false
+        },
+        {
+          "gu": "બાવા સિમરોલી",
+          "en": "Bava Simroli",
+          "translit": false
+        },
+        {
+          "gu": "ભાટ સિમરોલી",
+          "en": "Bhat Simroli",
+          "translit": false
+        },
+        {
+          "gu": "મંગલપુર",
+          "en": "Mangalpur",
+          "translit": false
+        },
+        {
+          "gu": "મઘરવાડા",
+          "en": "Magharwada",
+          "translit": false
+        },
+        {
+          "gu": "મઢડા",
+          "en": "Madhda",
+          "translit": false
+        },
+        {
+          "gu": "માણેકવાડા",
+          "en": "Manekwada",
+          "translit": false
+        },
+        {
+          "gu": "મુળીયાસા",
+          "en": "Muliyasa",
+          "translit": false
+        },
+        {
+          "gu": "મેસવાણ",
+          "en": "Mesvan",
+          "translit": false
+        },
+        {
+          "gu": "મોટી ઘંસારી",
+          "en": "Moti Ghansari",
+          "translit": false
+        },
+        {
+          "gu": "મોવાણા",
+          "en": "Movana",
+          "translit": false
+        },
+        {
+          "gu": "રંગપુર",
+          "en": "Rangpur",
+          "translit": false
+        },
+        {
+          "gu": "રાણીંગપરા",
+          "en": "Raningpara",
+          "translit": false
+        },
+        {
+          "gu": "રેવદ્રા",
+          "en": "Revadra",
+          "translit": false
+        },
+        {
+          "gu": "શેરગઢ",
+          "en": "Shergadh",
+          "translit": false
+        },
+        {
+          "gu": "સરોડ",
+          "en": "Sarod",
+          "translit": false
+        },
+        {
+          "gu": "સાંગરસોલા",
+          "en": "Sangarsola",
+          "translit": false
+        },
+        {
+          "gu": "સીલોદર",
+          "en": "Silodar",
+          "translit": false
+        },
+        {
+          "gu": "સુત્રેજ",
+          "en": "Sutrej",
+          "translit": false
+        },
+        {
+          "gu": "સોંદરડા",
+          "en": "Sondarda",
+          "translit": false
+        },
+        {
+          "gu": "હાંડલા",
+          "en": "Handla",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "માળીયા હાટીના",
+      "en": "Malia Hatina",
+      "villages": [
+        {
+          "gu": "અકાળા",
+          "en": "Akala",
+          "translit": false
+        },
+        {
+          "gu": "અકાળા ગીર",
+          "en": "Akala Gir",
+          "translit": false
+        },
+        {
+          "gu": "અમરાપુર ગીર",
+          "en": "Amrapur Gir",
+          "translit": false
+        },
+        {
+          "gu": "અવાણીયા",
+          "en": "Avaniya",
+          "translit": false
+        },
+        {
+          "gu": "આંબલગઢ",
+          "en": "Ambalgadh",
+          "translit": false
+        },
+        {
+          "gu": "આંબેચા",
+          "en": "Ambecha",
+          "translit": false
+        },
+        {
+          "gu": "આછીદ્રા",
+          "en": "Achhidra",
+          "translit": false
+        },
+        {
+          "gu": "ઇટાળી",
+          "en": "Itali",
+          "translit": false
+        },
+        {
+          "gu": "કડાયા",
+          "en": "Kadaya",
+          "translit": false
+        },
+        {
+          "gu": "કાણેક",
+          "en": "Kanek",
+          "translit": false
+        },
+        {
+          "gu": "કાત્રાસા",
+          "en": "Katrasa",
+          "translit": false
+        },
+        {
+          "gu": "કાલીંભડા",
+          "en": "Kalimbhda",
+          "translit": false
+        },
+        {
+          "gu": "કુકસવાડા",
+          "en": "Kukasvada",
+          "translit": false
+        },
+        {
+          "gu": "કેરાળા",
+          "en": "Kerala",
+          "translit": false
+        },
+        {
+          "gu": "ખંભાળીયા",
+          "en": "Khambhaliya",
+          "translit": false
+        },
+        {
+          "gu": "ખેરા",
+          "en": "Khera",
+          "translit": false
+        },
+        {
+          "gu": "ખોરાસા ગીર",
+          "en": "Khorasa Gir",
+          "translit": false
+        },
+        {
+          "gu": "ગડુ",
+          "en": "Gadu",
+          "translit": false
+        },
+        {
+          "gu": "ગળોદર",
+          "en": "Galodar",
+          "translit": false
+        },
+        {
+          "gu": "ગાંગેચા",
+          "en": "Gangecha",
+          "translit": false
+        },
+        {
+          "gu": "ગોતાણા",
+          "en": "Gotana",
+          "translit": false
+        },
+        {
+          "gu": "ઘુંઘટી",
+          "en": "Ghunghati",
+          "translit": false
+        },
+        {
+          "gu": "ઘુમલી",
+          "en": "Ghumli",
+          "translit": false
+        },
+        {
+          "gu": "ચુલડી",
+          "en": "Chuldi",
+          "translit": false
+        },
+        {
+          "gu": "ચોરવાડ",
+          "en": "Chorvad",
+          "translit": false
+        },
+        {
+          "gu": "જંગર",
+          "en": "Jangar",
+          "translit": false
+        },
+        {
+          "gu": "જલોંદર",
+          "en": "Jalondar",
+          "translit": false
+        },
+        {
+          "gu": "જાનડી",
+          "en": "Janadi",
+          "translit": false
+        },
+        {
+          "gu": "જાનુડા",
+          "en": "Januda",
+          "translit": false
+        },
+        {
+          "gu": "જામવાળી",
+          "en": "Jamvali",
+          "translit": false
+        },
+        {
+          "gu": "જુથળ",
+          "en": "Juthal",
+          "translit": false
+        },
+        {
+          "gu": "ઝડકા",
+          "en": "Jhadka",
+          "translit": false
+        },
+        {
+          "gu": "ઝુંઝારપુર",
+          "en": "Jhunjharpur",
+          "translit": false
+        },
+        {
+          "gu": "ડાંડેરી",
+          "en": "Danderi",
+          "translit": false
+        },
+        {
+          "gu": "તરસીંગડા",
+          "en": "Tarsingda",
+          "translit": false
+        },
+        {
+          "gu": "દુધાળા",
+          "en": "Dudhala",
+          "translit": false
+        },
+        {
+          "gu": "દેવગામ",
+          "en": "Devgam",
+          "translit": false
+        },
+        {
+          "gu": "ધણેજ નાની",
+          "en": "Dhanej Nani",
+          "translit": false
+        },
+        {
+          "gu": "ધણેજ મોટી",
+          "en": "Dhanej Moti",
+          "translit": false
+        },
+        {
+          "gu": "ધરમપુર",
+          "en": "Dharampur",
+          "translit": false
+        },
+        {
+          "gu": "ધ્રાબાવડ",
+          "en": "Dhrabavad",
+          "translit": false
+        },
+        {
+          "gu": "નવા ગળોદર",
+          "en": "Nava Galodar",
+          "translit": false
+        },
+        {
+          "gu": "પાણકુવા",
+          "en": "Pankuva",
+          "translit": false
+        },
+        {
+          "gu": "પાણીધ્રા",
+          "en": "Panidhra",
+          "translit": false
+        },
+        {
+          "gu": "પાતળા",
+          "en": "Patla",
+          "translit": false
+        },
+        {
+          "gu": "પીખોર",
+          "en": "Pikhor",
+          "translit": false
+        },
+        {
+          "gu": "પીપળવા",
+          "en": "Pipalva",
+          "translit": false
+        },
+        {
+          "gu": "બરૂલા",
+          "en": "Barula",
+          "translit": false
+        },
+        {
+          "gu": "બાબરા",
+          "en": "Babra",
+          "translit": false
+        },
+        {
+          "gu": "બુધેચા",
+          "en": "Budhecha",
+          "translit": false
+        },
+        {
+          "gu": "બોડી",
+          "en": "Bodi",
+          "translit": false
+        },
+        {
+          "gu": "ભંડુરી",
+          "en": "Bhanduri",
+          "translit": false
+        },
+        {
+          "gu": "ભાખરવડ",
+          "en": "Bhankharvad",
+          "translit": false
+        },
+        {
+          "gu": "માતરવાણીયા",
+          "en": "Matarvaniya",
+          "translit": false
+        },
+        {
+          "gu": "માળીયા",
+          "en": "Malia",
+          "translit": false
+        },
+        {
+          "gu": "લાંગોદ્રા",
+          "en": "Langodra",
+          "translit": false
+        },
+        {
+          "gu": "લાછડી",
+          "en": "Lachhadi",
+          "translit": false
+        },
+        {
+          "gu": "લાઠોદ્રા",
+          "en": "Lathodra",
+          "translit": false
+        },
+        {
+          "gu": "લાડુડી ગીર",
+          "en": "Ladudi Gir",
+          "translit": false
+        },
+        {
+          "gu": "વડાળા",
+          "en": "Vadala",
+          "translit": false
+        },
+        {
+          "gu": "વડીયા",
+          "en": "Vadiya",
+          "translit": false
+        },
+        {
+          "gu": "વાંદરવડ",
+          "en": "Vandarvad",
+          "translit": false
+        },
+        {
+          "gu": "વિષણવેલ",
+          "en": "Visanvel",
+          "translit": false
+        },
+        {
+          "gu": "વીરડી",
+          "en": "Virdi",
+          "translit": false
+        },
+        {
+          "gu": "શાંતીપુરા",
+          "en": "Shantipura",
+          "translit": false
+        },
+        {
+          "gu": "શેરીયાખાણ",
+          "en": "Sheriyakhan",
+          "translit": false
+        },
+        {
+          "gu": "સમઢીયાળા",
+          "en": "Samdhiyala",
+          "translit": false
+        },
+        {
+          "gu": "સરકડીયા",
+          "en": "Sarkadiya",
+          "translit": false
+        },
+        {
+          "gu": "સુખપુર",
+          "en": "Sukhpur",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "માણાવદર",
+      "en": "Manavadar",
+      "villages": [
+        {
+          "gu": "આંબલીયા",
+          "en": "Ambaliya",
+          "translit": false
+        },
+        {
+          "gu": "ઇન્દ્રા",
+          "en": "Indra",
+          "translit": false
+        },
+        {
+          "gu": "ઉંટડી",
+          "en": "Untadi",
+          "translit": false
+        },
+        {
+          "gu": "એકલેરા",
+          "en": "Eklera",
+          "translit": false
+        },
+        {
+          "gu": "કતકપરા",
+          "en": "Katakpara",
+          "translit": false
+        },
+        {
+          "gu": "કોઠડી",
+          "en": "Kothadi",
+          "translit": false
+        },
+        {
+          "gu": "કોઠારીયા",
+          "en": "Kothariya",
+          "translit": false
+        },
+        {
+          "gu": "કોડવાવ",
+          "en": "Kodvav",
+          "translit": false
+        },
+        {
+          "gu": "કોયલાણા",
+          "en": "Koylana",
+          "translit": false
+        },
+        {
+          "gu": "ખખાવી",
+          "en": "Khakhavi",
+          "translit": false
+        },
+        {
+          "gu": "ખડિયા",
+          "en": "Khadiya",
+          "translit": false
+        },
+        {
+          "gu": "ગણા",
+          "en": "Gana",
+          "translit": false
+        },
+        {
+          "gu": "ગળવાવ",
+          "en": "Galvav",
+          "translit": false
+        },
+        {
+          "gu": "ચિખલોદ્રા",
+          "en": "Chikhlodra",
+          "translit": false
+        },
+        {
+          "gu": "ચુડવા",
+          "en": "Chudva",
+          "translit": false
+        },
+        {
+          "gu": "જાંબુડા",
+          "en": "Jambuda",
+          "translit": false
+        },
+        {
+          "gu": "જીલાણા",
+          "en": "Jilana",
+          "translit": false
+        },
+        {
+          "gu": "ઝીંઝરી",
+          "en": "Zinzri",
+          "translit": false
+        },
+        {
+          "gu": "થાનીયાણા",
+          "en": "Thaniyana",
+          "translit": false
+        },
+        {
+          "gu": "થાપલા",
+          "en": "Thapala",
+          "translit": false
+        },
+        {
+          "gu": "દગડ",
+          "en": "Dagad",
+          "translit": false
+        },
+        {
+          "gu": "દડવા",
+          "en": "Dadva",
+          "translit": false
+        },
+        {
+          "gu": "દેશીંગા",
+          "en": "Deshinga",
+          "translit": false
+        },
+        {
+          "gu": "નાંદરખા",
+          "en": "Nandarkha",
+          "translit": false
+        },
+        {
+          "gu": "નાકરા",
+          "en": "Nakra",
+          "translit": false
+        },
+        {
+          "gu": "નાનડીયા",
+          "en": "Nanadiya",
+          "translit": false
+        },
+        {
+          "gu": "પાજોદ",
+          "en": "Pajod",
+          "translit": false
+        },
+        {
+          "gu": "પાદરડી",
+          "en": "Padardi",
+          "translit": false
+        },
+        {
+          "gu": "પીપલાણા",
+          "en": "Piplana",
+          "translit": false
+        },
+        {
+          "gu": "બાંટવા",
+          "en": "Bantva",
+          "translit": false
+        },
+        {
+          "gu": "બુરી",
+          "en": "Buri",
+          "translit": false
+        },
+        {
+          "gu": "બોડકા",
+          "en": "Bodka",
+          "translit": false
+        },
+        {
+          "gu": "ભડુલા",
+          "en": "Bhadula",
+          "translit": false
+        },
+        {
+          "gu": "ભલગામ",
+          "en": "Bhalgam",
+          "translit": false
+        },
+        {
+          "gu": "ભાલેચડા",
+          "en": "Bhalechda",
+          "translit": false
+        },
+        {
+          "gu": "ભિતાણા",
+          "en": "Bhitana",
+          "translit": false
+        },
+        {
+          "gu": "ભીંડોરા",
+          "en": "Bhindora",
+          "translit": false
+        },
+        {
+          "gu": "મટીયાણા",
+          "en": "Matiana",
+          "translit": false
+        },
+        {
+          "gu": "મરમઠ",
+          "en": "Marmath",
+          "translit": false
+        },
+        {
+          "gu": "માંડોદરા",
+          "en": "Mandodra",
+          "translit": false
+        },
+        {
+          "gu": "માણાવદર",
+          "en": "Manavadar",
+          "translit": false
+        },
+        {
+          "gu": "મીતડી",
+          "en": "Mitadi",
+          "translit": false
+        },
+        {
+          "gu": "રફાળા",
+          "en": "Rafala",
+          "translit": false
+        },
+        {
+          "gu": "રોણકી",
+          "en": "Ronki",
+          "translit": false
+        },
+        {
+          "gu": "લીંબુડા",
+          "en": "Limbuda",
+          "translit": false
+        },
+        {
+          "gu": "વડા",
+          "en": "Vada",
+          "translit": false
+        },
+        {
+          "gu": "વડાળા",
+          "en": "Vadala",
+          "translit": false
+        },
+        {
+          "gu": "વાડાસડા",
+          "en": "Vadasda",
+          "translit": false
+        },
+        {
+          "gu": "વેકરી",
+          "en": "Vekri",
+          "translit": false
+        },
+        {
+          "gu": "વેળવા",
+          "en": "Velva",
+          "translit": false
+        },
+        {
+          "gu": "શેરડી",
+          "en": "Sherdi",
+          "translit": false
+        },
+        {
+          "gu": "સણોસરા",
+          "en": "Sanosra",
+          "translit": false
+        },
+        {
+          "gu": "સમેગા",
+          "en": "Samega",
+          "translit": false
+        },
+        {
+          "gu": "સરદારગઢ",
+          "en": "Sardargadh",
+          "translit": false
+        },
+        {
+          "gu": "સરાડીયા",
+          "en": "Saradiya",
+          "translit": false
+        },
+        {
+          "gu": "સારંગ પીપળી",
+          "en": "Sarang Pipli",
+          "translit": false
+        },
+        {
+          "gu": "સીતાણા",
+          "en": "Sitana",
+          "translit": false
+        },
+        {
+          "gu": "સુલતાનાબાદ",
+          "en": "Sultanabad",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "માંગરોળ",
+      "en": "Mangrol",
+      "villages": [
+        {
+          "gu": "આંત્રોલી",
+          "en": "Antroli",
+          "translit": false
+        },
+        {
+          "gu": "આજક",
+          "en": "Ajak",
+          "translit": false
+        },
+        {
+          "gu": "આરેણા",
+          "en": "Arena",
+          "translit": false
+        },
+        {
+          "gu": "ઓસા ઘેડ",
+          "en": "Osa Ghed",
+          "translit": false
+        },
+        {
+          "gu": "કંકાણા",
+          "en": "Kankana",
+          "translit": false
+        },
+        {
+          "gu": "કંકાસા",
+          "en": "Kankasa",
+          "translit": false
+        },
+        {
+          "gu": "કરમડી",
+          "en": "Karamdi",
+          "translit": false
+        },
+        {
+          "gu": "કાલેજ",
+          "en": "Kalej",
+          "translit": false
+        },
+        {
+          "gu": "કોટડા જુના",
+          "en": "Kotda Juna",
+          "translit": false
+        },
+        {
+          "gu": "કોટડા નવા",
+          "en": "Kotda Nava",
+          "translit": false
+        },
+        {
+          "gu": "ખોડાદા",
+          "en": "Khodada",
+          "translit": false
+        },
+        {
+          "gu": "ગોરેજ",
+          "en": "Gorej",
+          "translit": false
+        },
+        {
+          "gu": "ઘોડાદર",
+          "en": "Ghodadar",
+          "translit": false
+        },
+        {
+          "gu": "ચંદવાણા",
+          "en": "Chandvana",
+          "translit": false
+        },
+        {
+          "gu": "ચાંખવા",
+          "en": "Chankhva",
+          "translit": false
+        },
+        {
+          "gu": "ચિંગરીયા",
+          "en": "Chingariya",
+          "translit": false
+        },
+        {
+          "gu": "ચોટીલીવીડી",
+          "en": "Chotilividi",
+          "translit": false
+        },
+        {
+          "gu": "ઝરીયાવાડા",
+          "en": "Zariyavada",
+          "translit": false
+        },
+        {
+          "gu": "ઢેલાણા",
+          "en": "Dhelana",
+          "translit": false
+        },
+        {
+          "gu": "તલોદ્રા",
+          "en": "Talodra",
+          "translit": false
+        },
+        {
+          "gu": "થલી",
+          "en": "Thali",
+          "translit": false
+        },
+        {
+          "gu": "દરસાલી",
+          "en": "Darsali",
+          "translit": false
+        },
+        {
+          "gu": "દિવરાણા",
+          "en": "Divrana",
+          "translit": false
+        },
+        {
+          "gu": "દિવાસા",
+          "en": "Divasa",
+          "translit": false
+        },
+        {
+          "gu": "નગીચાણા",
+          "en": "Nagichana",
+          "translit": false
+        },
+        {
+          "gu": "નાંદરખી",
+          "en": "Nandarkhi",
+          "translit": false
+        },
+        {
+          "gu": "ફરંગટા",
+          "en": "Farangta",
+          "translit": false
+        },
+        {
+          "gu": "ફુલરામા",
+          "en": "Fulrama",
+          "translit": false
+        },
+        {
+          "gu": "બગસરા ઘેડ",
+          "en": "Bagasra-Ghed",
+          "translit": false
+        },
+        {
+          "gu": "બામણવાડા",
+          "en": "Bamanvada",
+          "translit": false
+        },
+        {
+          "gu": "ભાટગામ",
+          "en": "Bhatgam",
+          "translit": false
+        },
+        {
+          "gu": "ભાથરોટ",
+          "en": "Bhathrot",
+          "translit": false
+        },
+        {
+          "gu": "મકતુપુર",
+          "en": "Maktupur",
+          "translit": false
+        },
+        {
+          "gu": "માંગરોળ",
+          "en": "Mangrol",
+          "translit": false
+        },
+        {
+          "gu": "માનખેત્રા",
+          "en": "Mankhetra",
+          "translit": false
+        },
+        {
+          "gu": "મિતિ",
+          "en": "Miti",
+          "translit": false
+        },
+        {
+          "gu": "મેખડી",
+          "en": "Mekhadi",
+          "translit": false
+        },
+        {
+          "gu": "મેણાજ",
+          "en": "Menanj",
+          "translit": false
+        },
+        {
+          "gu": "રહીજ",
+          "en": "Rahij",
+          "translit": false
+        },
+        {
+          "gu": "રુદલપુર",
+          "en": "Roodalpur",
+          "translit": false
+        },
+        {
+          "gu": "લંબોરા",
+          "en": "Lambora",
+          "translit": false
+        },
+        {
+          "gu": "લાંગડ",
+          "en": "Langad",
+          "translit": false
+        },
+        {
+          "gu": "લોએજ",
+          "en": "Lohej",
+          "translit": false
+        },
+        {
+          "gu": "વાડલા",
+          "en": "Vadla",
+          "translit": false
+        },
+        {
+          "gu": "વિરપુર",
+          "en": "Virpur",
+          "translit": false
+        },
+        {
+          "gu": "વિરોલ",
+          "en": "Virol",
+          "translit": false
+        },
+        {
+          "gu": "શાપુર",
+          "en": "Shapur",
+          "translit": false
+        },
+        {
+          "gu": "શીલ",
+          "en": "Shil",
+          "translit": false
+        },
+        {
+          "gu": "શેખપુર",
+          "en": "Shaikhpur",
+          "translit": false
+        },
+        {
+          "gu": "શેપા",
+          "en": "Shepa",
+          "translit": false
+        },
+        {
+          "gu": "શેરીયાજ",
+          "en": "Sheriyaj",
+          "translit": false
+        },
+        {
+          "gu": "સંગવાડા",
+          "en": "Sangavada",
+          "translit": false
+        },
+        {
+          "gu": "સકરાણા",
+          "en": "Sakrana",
+          "translit": false
+        },
+        {
+          "gu": "સરમા",
+          "en": "Sharma",
+          "translit": false
+        },
+        {
+          "gu": "સરસાલી",
+          "en": "Sarsali",
+          "translit": false
+        },
+        {
+          "gu": "સાંઢા",
+          "en": "Sandha",
+          "translit": false
+        },
+        {
+          "gu": "સામરડા",
+          "en": "Samarda",
+          "translit": false
+        },
+        {
+          "gu": "સુલ્તાનપુર",
+          "en": "Sultanpur",
+          "translit": false
+        },
+        {
+          "gu": "હંટરપુર",
+          "en": "Hantarpur",
+          "translit": false
+        },
+        {
+          "gu": "હુસેનાબાદ",
+          "en": "Husenabad",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "મેંદરડા",
+      "en": "Mendarda",
+      "villages": [
+        {
+          "gu": "અંબાળા",
+          "en": "Ambala",
+          "translit": false
+        },
+        {
+          "gu": "અમરગઢ",
+          "en": "Amargadh",
+          "translit": false
+        },
+        {
+          "gu": "અમરાપુર",
+          "en": "Amrapur",
+          "translit": false
+        },
+        {
+          "gu": "અરણીયાળા",
+          "en": "Arniyala",
+          "translit": false
+        },
+        {
+          "gu": "આંબલા",
+          "en": "Ambla",
+          "translit": false
+        },
+        {
+          "gu": "આલીધ્રા",
+          "en": "Alidhra",
+          "translit": false
+        },
+        {
+          "gu": "ઇટાળી",
+          "en": "Itali",
+          "translit": false
+        },
+        {
+          "gu": "કંથાળા નેસ",
+          "en": "Kanthala Nes",
+          "translit": false
+        },
+        {
+          "gu": "કરશનગઢ",
+          "en": "Karsangadh",
+          "translit": false
+        },
+        {
+          "gu": "કિલોરીયા નેસ",
+          "en": "Kiloriya Nes",
+          "translit": false
+        },
+        {
+          "gu": "કેનેડીપુર",
+          "en": "Kenadipur",
+          "translit": false
+        },
+        {
+          "gu": "ખડપીપળી",
+          "en": "Khadpipli",
+          "translit": false
+        },
+        {
+          "gu": "ખિજડીયા",
+          "en": "Khijadiya",
+          "translit": false
+        },
+        {
+          "gu": "ખીમપાદર",
+          "en": "Khim Padar",
+          "translit": false
+        },
+        {
+          "gu": "ગડકીયા",
+          "en": "Gadakiya",
+          "translit": false
+        },
+        {
+          "gu": "ગઢાળી",
+          "en": "Gadhali",
+          "translit": false
+        },
+        {
+          "gu": "ગુંદાળા",
+          "en": "Gundala",
+          "translit": false
+        },
+        {
+          "gu": "ગુંદીયાળી",
+          "en": "Gundiyali",
+          "translit": false
+        },
+        {
+          "gu": "ચાંદ્રાવાડી",
+          "en": "Chandravadi",
+          "translit": false
+        },
+        {
+          "gu": "ચિરોડા",
+          "en": "Chiroda",
+          "translit": false
+        },
+        {
+          "gu": "જાંબુડી નેસ",
+          "en": "Jambudi Nes",
+          "translit": false
+        },
+        {
+          "gu": "ઝીંઝુડા",
+          "en": "Jhinjhuda",
+          "translit": false
+        },
+        {
+          "gu": "ટીંબી",
+          "en": "Timbi",
+          "translit": false
+        },
+        {
+          "gu": "ડેડકીયાળ",
+          "en": "Dedakiyal",
+          "translit": false
+        },
+        {
+          "gu": "ઢાંઢાવાડા",
+          "en": "Dhandhawada",
+          "translit": false
+        },
+        {
+          "gu": "દાત્રાણા",
+          "en": "Datrana",
+          "translit": false
+        },
+        {
+          "gu": "દેવગઢ",
+          "en": "Devgadh",
+          "translit": false
+        },
+        {
+          "gu": "નતાળીયા",
+          "en": "Nataliya",
+          "translit": false
+        },
+        {
+          "gu": "નાગલપુર",
+          "en": "Nagalpur",
+          "translit": false
+        },
+        {
+          "gu": "નાજાપુર",
+          "en": "Najapur",
+          "translit": false
+        },
+        {
+          "gu": "નાજાપુર (ક્ષત્રિય)",
+          "en": "Najapur (Chhatariya)",
+          "translit": false
+        },
+        {
+          "gu": "નાની ખોડીયાર",
+          "en": "Nani Khodiyar",
+          "translit": false
+        },
+        {
+          "gu": "પાટરામા",
+          "en": "Patarama",
+          "translit": false
+        },
+        {
+          "gu": "બરવાળા",
+          "en": "Barvala",
+          "translit": false
+        },
+        {
+          "gu": "બાબર તીરથ",
+          "en": "Babar Tirath",
+          "translit": false
+        },
+        {
+          "gu": "ભાલછેલ",
+          "en": "Bhalchhel",
+          "translit": false
+        },
+        {
+          "gu": "માનપુર",
+          "en": "Manpur",
+          "translit": false
+        },
+        {
+          "gu": "માલણકા",
+          "en": "Malanka",
+          "translit": false
+        },
+        {
+          "gu": "મીઠાપુર",
+          "en": "Mithapur",
+          "translit": false
+        },
+        {
+          "gu": "મેંદરડા",
+          "en": "Mendarda",
+          "translit": false
+        },
+        {
+          "gu": "મોટી ખોડીયાર",
+          "en": "Moti Khodiyar",
+          "translit": false
+        },
+        {
+          "gu": "રાજાવડ",
+          "en": "Rajavad",
+          "translit": false
+        },
+        {
+          "gu": "રાજેસર",
+          "en": "Rajesar",
+          "translit": false
+        },
+        {
+          "gu": "રાણીધાર",
+          "en": "Ranidhar",
+          "translit": false
+        },
+        {
+          "gu": "લીલવા",
+          "en": "Lilva",
+          "translit": false
+        },
+        {
+          "gu": "વાણીયા વાવ",
+          "en": "Vaniya Vav",
+          "translit": false
+        },
+        {
+          "gu": "સમઢીયાળા",
+          "en": "Samadhiyala",
+          "translit": false
+        },
+        {
+          "gu": "સાસણ",
+          "en": "Sasan",
+          "translit": false
+        },
+        {
+          "gu": "સીમાસી",
+          "en": "Simasi",
+          "translit": false
+        },
+        {
+          "gu": "સુરજગઢ",
+          "en": "Surajgadh",
+          "translit": false
+        },
+        {
+          "gu": "હરીપુર",
+          "en": "Haripur",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "વંથલી",
+      "en": "Vanthali",
+      "villages": [
+        {
+          "gu": "આખા",
+          "en": "Akha",
+          "translit": false
+        },
+        {
+          "gu": "ઉમટવાડા",
+          "en": "Umatwada",
+          "translit": false
+        },
+        {
+          "gu": "કણજડી",
+          "en": "Kanjhadi",
+          "translit": false
+        },
+        {
+          "gu": "કણજા",
+          "en": "Kanjha",
+          "translit": false
+        },
+        {
+          "gu": "કાજલીયા નાના",
+          "en": "Kajaliya Nana",
+          "translit": false
+        },
+        {
+          "gu": "કાજલીયા મોટા",
+          "en": "Kajaliya Mota",
+          "translit": false
+        },
+        {
+          "gu": "કોયલી",
+          "en": "Koyli",
+          "translit": false
+        },
+        {
+          "gu": "ખુંભડી",
+          "en": "Khumbhdi",
+          "translit": false
+        },
+        {
+          "gu": "ખોખરડા",
+          "en": "Khokharda",
+          "translit": false
+        },
+        {
+          "gu": "ખોરાસા",
+          "en": "Khorasa",
+          "translit": false
+        },
+        {
+          "gu": "ગાંઠીલા",
+          "en": "Ganthila",
+          "translit": false
+        },
+        {
+          "gu": "ગાડોઇ",
+          "en": "Gadoi",
+          "translit": false
+        },
+        {
+          "gu": "ઘંટીયા",
+          "en": "Ghantiya",
+          "translit": false
+        },
+        {
+          "gu": "ઘુડવદર",
+          "en": "Ghudvadar",
+          "translit": false
+        },
+        {
+          "gu": "ઝાંપોદડ",
+          "en": "Zampodad",
+          "translit": false
+        },
+        {
+          "gu": "ટીકર-પાદરડી",
+          "en": "Tikar-Padardi",
+          "translit": false
+        },
+        {
+          "gu": "ટીનમસ",
+          "en": "Tinmas",
+          "translit": false
+        },
+        {
+          "gu": "ડુંગરી",
+          "en": "Dungri",
+          "translit": false
+        },
+        {
+          "gu": "થાણાપીપળી",
+          "en": "Thanapipli",
+          "translit": false
+        },
+        {
+          "gu": "ધંધુસર",
+          "en": "Dhandhusar",
+          "translit": false
+        },
+        {
+          "gu": "ધણફુલીયા",
+          "en": "Dhanfuliya",
+          "translit": false
+        },
+        {
+          "gu": "નગડીયા",
+          "en": "Nagadiya",
+          "translit": false
+        },
+        {
+          "gu": "નરેડી",
+          "en": "Naredi",
+          "translit": false
+        },
+        {
+          "gu": "નવલખી",
+          "en": "Navlakhi",
+          "translit": false
+        },
+        {
+          "gu": "નાંદરખી (રાણીજીવિડી)",
+          "en": "Nandarkhi (Ranijividi)",
+          "translit": false
+        },
+        {
+          "gu": "નાવડા",
+          "en": "Navada",
+          "translit": false
+        },
+        {
+          "gu": "બંટીયા",
+          "en": "Bantiya",
+          "translit": false
+        },
+        {
+          "gu": "બંધડા",
+          "en": "Bandhda",
+          "translit": false
+        },
+        {
+          "gu": "બરવાળા",
+          "en": "Barwala",
+          "translit": false
+        },
+        {
+          "gu": "બાલોટ",
+          "en": "Balot",
+          "translit": false
+        },
+        {
+          "gu": "બોડકા",
+          "en": "Bodka",
+          "translit": false
+        },
+        {
+          "gu": "ભાટીયા",
+          "en": "Bhatiya",
+          "translit": false
+        },
+        {
+          "gu": "મહોબતપુર",
+          "en": "Mahobatpur",
+          "translit": false
+        },
+        {
+          "gu": "મેઘપુર",
+          "en": "Meghpur",
+          "translit": false
+        },
+        {
+          "gu": "રવની",
+          "en": "Ravni",
+          "translit": false
+        },
+        {
+          "gu": "રાયપુર",
+          "en": "Raypur",
+          "translit": false
+        },
+        {
+          "gu": "લુવારસર",
+          "en": "Luvarsar",
+          "translit": false
+        },
+        {
+          "gu": "લુશાળા",
+          "en": "Lushala",
+          "translit": false
+        },
+        {
+          "gu": "વંથલી",
+          "en": "Vanthali",
+          "translit": false
+        },
+        {
+          "gu": "વસપડા",
+          "en": "Vaspada",
+          "translit": false
+        },
+        {
+          "gu": "વાડલા",
+          "en": "Vadla",
+          "translit": false
+        },
+        {
+          "gu": "શાપુર",
+          "en": "Shapur",
+          "translit": false
+        },
+        {
+          "gu": "સાંતલપુર",
+          "en": "Santalpur",
+          "translit": false
+        },
+        {
+          "gu": "સુખપુર",
+          "en": "Sukhpur",
+          "translit": false
+        },
+        {
+          "gu": "સેંદરડા",
+          "en": "Sendarda",
+          "translit": false
+        },
+        {
+          "gu": "સેલરા",
+          "en": "Selra",
+          "translit": false
+        },
+        {
+          "gu": "સોનારડી",
+          "en": "Sonardi",
+          "translit": false
+        }
+      ]
+    },
+    {
+      "gu": "વિસાવદર",
+      "en": "Visavadar",
+      "villages": [
+        {
+          "gu": "અંબાળા",
+          "en": "Ambala",
+          "translit": false
+        },
+        {
+          "gu": "અમલીયારા",
+          "en": "Amaliyara",
+          "translit": false
+        },
+        {
+          "gu": "ઇશ્વરીયા (ગીર)",
+          "en": "Ishvariya (Gir)",
+          "translit": false
+        },
+        {
+          "gu": "ઇશ્વરીયા માંડાવડ",
+          "en": "Ishvariya Mandavad",
+          "translit": false
+        },
+        {
+          "gu": "કનકાઇ",
+          "en": "Kankai",
+          "translit": false
+        },
+        {
+          "gu": "કરકડી",
+          "en": "Karkadi",
+          "translit": false
+        },
+        {
+          "gu": "કાંકચીયાળા",
+          "en": "Kankchiyala",
+          "translit": false
+        },
+        {
+          "gu": "કાગમલ",
+          "en": "Kagmal",
+          "translit": false
+        },
+        {
+          "gu": "કાનાવડલા",
+          "en": "Kanavadla",
+          "translit": false
+        },
+        {
+          "gu": "કાલસારી",
+          "en": "Kalsari",
+          "translit": false
+        },
+        {
+          "gu": "કાલાવડ",
+          "en": "Kalavad",
+          "translit": false
+        },
+        {
+          "gu": "કુતીયા-અમલીયારા",
+          "en": "Kutiya-Amliyara",
+          "translit": false
+        },
+        {
+          "gu": "કુબા (રાવણી)",
+          "en": "Kuba (Ravani)",
+          "translit": false
+        },
+        {
+          "gu": "કોટડા નાના",
+          "en": "Kotda Nana",
+          "translit": false
+        },
+        {
+          "gu": "કોટડા મોટા",
+          "en": "Kotda Mota",
+          "translit": false
+        },
+        {
+          "gu": "ખંભાડા",
+          "en": "Khambhda",
+          "translit": false
+        },
+        {
+          "gu": "ખંભાળીયા",
+          "en": "Khambhaliya",
+          "translit": false
+        },
+        {
+          "gu": "ખાંભા ગીર",
+          "en": "Khambha Gir",
+          "translit": false
+        },
+        {
+          "gu": "ખિજડીયા",
+          "en": "Khijadiya",
+          "translit": false
+        },
+        {
+          "gu": "ગોરડવાલા",
+          "en": "Goradwala",
+          "translit": false
+        },
+        {
+          "gu": "ગોવિંદપરા",
+          "en": "Govindpara",
+          "translit": false
+        },
+        {
+          "gu": "ઘંટીયાણ",
+          "en": "Ghantiyan",
+          "translit": false
+        },
+        {
+          "gu": "ઘોડાસણ",
+          "en": "Ghodasan",
+          "translit": false
+        },
+        {
+          "gu": "ચાપરડા",
+          "en": "Chaparda",
+          "translit": false
+        },
+        {
+          "gu": "ચાવંડ જુની",
+          "en": "Chavand Juni",
+          "translit": false
+        },
+        {
+          "gu": "ચાવંડ નવી",
+          "en": "Chavand Navi",
+          "translit": false
+        },
+        {
+          "gu": "છાલડા",
+          "en": "Chhalda",
+          "translit": false
+        },
+        {
+          "gu": "છેલણકા",
+          "en": "Chhelanka",
+          "translit": false
+        },
+        {
+          "gu": "જાંબાળા",
+          "en": "Jambala",
+          "translit": false
+        },
+        {
+          "gu": "જાંબુડા",
+          "en": "Jambuda",
+          "translit": false
+        },
+        {
+          "gu": "જાંબુડી",
+          "en": "Jambudi",
+          "translit": false
+        },
+        {
+          "gu": "જાંબુથાળા",
+          "en": "Jambuthala",
+          "translit": true
+        },
+        {
+          "gu": "જાવલડી",
+          "en": "Javaldi",
+          "translit": false
+        },
+        {
+          "gu": "જેતલવડ",
+          "en": "Jetalvad",
+          "translit": false
+        },
+        {
+          "gu": "ઝાંઝેસર",
+          "en": "Jhanjhesar",
+          "translit": false
+        },
+        {
+          "gu": "ટાઢી",
+          "en": "Tadhi",
+          "translit": true
+        },
+        {
+          "gu": "ઢેબર",
+          "en": "Dhebar",
+          "translit": false
+        },
+        {
+          "gu": "દાદર",
+          "en": "Dadar",
+          "translit": false
+        },
+        {
+          "gu": "દુધાળા",
+          "en": "Dudhala",
+          "translit": false
+        },
+        {
+          "gu": "દેવકરણીયા",
+          "en": "Devkaraniya",
+          "translit": false
+        },
+        {
+          "gu": "દેસાઈ વડાળા",
+          "en": "Desai Vadala",
+          "translit": false
+        },
+        {
+          "gu": "નવાણીયા",
+          "en": "Navaniya",
+          "translit": false
+        },
+        {
+          "gu": "પાંજરાપોળની સુવરડી",
+          "en": "Panjrapole Ni Suvardi",
+          "translit": true
+        },
+        {
+          "gu": "પાડાપાણી",
+          "en": "Padapani",
+          "translit": true
+        },
+        {
+          "gu": "પાનવી",
+          "en": "Panvi",
+          "translit": true
+        },
+        {
+          "gu": "પિંડખાઇ નાની",
+          "en": "Pindakhai Nani",
+          "translit": false
+        },
+        {
+          "gu": "પિંડખાઇ મોટી",
+          "en": "Pindakhai Moti",
+          "translit": false
+        },
+        {
+          "gu": "પિપળીયા હાજાણી",
+          "en": "Pipaliya Hajani",
+          "translit": false
+        },
+        {
+          "gu": "પિયાવા ગીર",
+          "en": "Piyava Gir",
+          "translit": false
+        },
+        {
+          "gu": "પિરવડ",
+          "en": "Pirvad",
+          "translit": false
+        },
+        {
+          "gu": "પ્રેમપરા",
+          "en": "Prempara",
+          "translit": false
+        },
+        {
+          "gu": "બગોયા",
+          "en": "Bagoya",
+          "translit": false
+        },
+        {
+          "gu": "બજારીયા",
+          "en": "Bajariya",
+          "translit": false
+        },
+        {
+          "gu": "બરડીયા",
+          "en": "Baradiya",
+          "translit": false
+        },
+        {
+          "gu": "બારવાનીયા નેસ",
+          "en": "Barvaniya Nes",
+          "translit": false
+        },
+        {
+          "gu": "બોગડીયા",
+          "en": "Bogadiya",
+          "translit": false
+        },
+        {
+          "gu": "ભટ્ટ વાવડી",
+          "en": "Bhat Vavdi",
+          "translit": false
+        },
+        {
+          "gu": "ભલગામ",
+          "en": "Bhalgam",
+          "translit": false
+        },
+        {
+          "gu": "ભુતડી",
+          "en": "Bhutdi",
+          "translit": false
+        },
+        {
+          "gu": "મખાણીયા",
+          "en": "Makhaniya",
+          "translit": false
+        },
+        {
+          "gu": "મહુડા",
+          "en": "Mahuda",
+          "translit": false
+        },
+        {
+          "gu": "મહુડી",
+          "en": "Mahudi",
+          "translit": false
+        },
+        {
+          "gu": "માંગનાથ પીપળી",
+          "en": "Manganath Pipli",
+          "translit": false
+        },
+        {
+          "gu": "માંડાવડ",
+          "en": "Mandavad",
+          "translit": false
+        },
+        {
+          "gu": "માણંદીયા",
+          "en": "Manandiya",
+          "translit": false
+        },
+        {
+          "gu": "મીયાવડલા",
+          "en": "Miya Vadla",
+          "translit": false
+        },
+        {
+          "gu": "મોટા ભીલગાળા",
+          "en": "Mota Bhilgala",
+          "translit": true
+        },
+        {
+          "gu": "મોણપરી નાની",
+          "en": "Monpari Nani",
+          "translit": false
+        },
+        {
+          "gu": "મોણપરી મોટી",
+          "en": "Monpari Moti",
+          "translit": false
+        },
+        {
+          "gu": "મોણીયા",
+          "en": "Moniya",
+          "translit": false
+        },
+        {
+          "gu": "રતાંગ",
+          "en": "Ratang",
+          "translit": false
+        },
+        {
+          "gu": "રબારીકા",
+          "en": "Rabarika",
+          "translit": false
+        },
+        {
+          "gu": "રાજપરા",
+          "en": "Rajpara",
+          "translit": false
+        },
+        {
+          "gu": "રાવણી (કુબા)",
+          "en": "Ravani (Kuba)",
+          "translit": false
+        },
+        {
+          "gu": "રાવણી મુંડીયા",
+          "en": "Ravani Mundiya",
+          "translit": false
+        },
+        {
+          "gu": "રૂપાવટી",
+          "en": "Rupavati",
+          "translit": false
+        },
+        {
+          "gu": "રોસાળી",
+          "en": "Rosali",
+          "translit": true
+        },
+        {
+          "gu": "લાલપુર",
+          "en": "Lalpur",
+          "translit": false
+        },
+        {
+          "gu": "લાસા",
+          "en": "Lasa",
+          "translit": false
+        },
+        {
+          "gu": "લિલીયા",
+          "en": "Liliya",
+          "translit": false
+        },
+        {
+          "gu": "લીમધ્રા",
+          "en": "Limadhra",
+          "translit": false
+        },
+        {
+          "gu": "લીલાપાણી",
+          "en": "Lilapani",
+          "translit": false
+        },
+        {
+          "gu": "લેરીયા",
+          "en": "Leriya",
+          "translit": false
+        },
+        {
+          "gu": "વડાળા શેત્રંજ",
+          "en": "Vadala Shetranj",
+          "translit": false
+        },
+        {
+          "gu": "વાજડી",
+          "en": "Vajdi",
+          "translit": false
+        },
+        {
+          "gu": "વિછાવડ",
+          "en": "Vichhavad",
+          "translit": false
+        },
+        {
+          "gu": "વિરપુર",
+          "en": "Virpur",
+          "translit": false
+        },
+        {
+          "gu": "વિસાવદર",
+          "en": "Visavadar",
+          "translit": false
+        },
+        {
+          "gu": "વેકરીયા",
+          "en": "Vekariya",
+          "translit": false
+        },
+        {
+          "gu": "શાપુર (નેસ)",
+          "en": "Shapur (Nes)",
+          "translit": true
+        },
+        {
+          "gu": "શીરવાણીયા",
+          "en": "Shirvaniya",
+          "translit": false
+        },
+        {
+          "gu": "શોભાવડલા ગીર",
+          "en": "Shobhavadla Gir",
+          "translit": false
+        },
+        {
+          "gu": "શોભાવડલા લશ્કર",
+          "en": "Shobhavadla Lashkar",
+          "translit": false
+        },
+        {
+          "gu": "સરસાઇ",
+          "en": "Sarsai",
+          "translit": false
+        },
+        {
+          "gu": "સુખપુર",
+          "en": "Sukhpur",
+          "translit": false
+        },
+        {
+          "gu": "સુવરડી",
+          "en": "Suvardi",
+          "translit": true
+        },
+        {
+          "gu": "હડમતીયા નાના",
+          "en": "Hadmatiya Nana",
+          "translit": false
+        },
+        {
+          "gu": "હડમતીયા મોટા",
+          "en": "Hadmatiya Mota",
+          "translit": false
+        },
+        {
+          "gu": "હરિપુર",
+          "en": "Haripur",
+          "translit": false
+        },
+        {
+          "gu": "હલદરવા નેસ",
+          "en": "Haldarva Nes",
+          "translit": false
+        },
+        {
+          "gu": "હસ્નાપુર",
+          "en": "Hasnapur",
+          "translit": false
+        }
+      ]
+    }
+  ]
+}

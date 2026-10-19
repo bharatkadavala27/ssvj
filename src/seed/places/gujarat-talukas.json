@@ -1,0 +1,1298 @@
+{
+  "asOf": "2026-10-19",
+  "note": "Official 268 talukas (I&M Dept resolution, Sep 2026). Mamlatdar city sub-units are not listed separately.",
+  "sources": [
+    "https://indextb.com/files/2026/9/fca7995b-2974-4182-b6ba-664e70ba23de_Taluka%20classification%20GR%202026.pdf",
+    "https://www.gujaratsamachar.com/news/gandhinagar/big-decision-to-promote-industries-in-gujarat-new-classification-of-268-talukas-announced-130-included-in-category-a-and-138-in-category-b-24314191336",
+    "https://anyror.gujarat.gov.in/LandRecordRural.aspx",
+    "https://lgdirectory.gov.in/webservices/lgdws/districtList (stateCode=24) and /subdistrictList (per districtCode)",
+    "https://gu.wikipedia.org/wiki/ગુજરાતના_તાલુકાઓ",
+    "https://en.wikipedia.org/wiki/List_of_districts_of_Gujarat",
+    "https://en.wikipedia.org/wiki/Vav-Tharad_district",
+    "https://deshgujarat.com/2025/09/24/gujarat-set-to-get-17-new-talukas-bringing-total-to-269/",
+    "https://deshgujarat.com/2025/09/25/gujarat-govt-notifies-17-new-talukas-here-is-complete-list-of-villages-in-these-talukas/",
+    "https://deshgujarat.com/2025/10/07/gujarat-cabinet-approves-changes-in-villages-of-new-talukas-in-surat-mahisagar-and-kheda/",
+    "https://deshgujarat.com/2026/01/02/gujarat-govt-notifies-reorganisation-of-four-talukas-here-is-the-list-of-villages-in-these-talukas/",
+    "https://newsonair.gov.in/gu/રાજ્યમાં-નવા-17-તાલુકાઓની-ર/",
+    "https://www.gujaratsamachar.com/news/gujarat/gujarat-cm-bhupendra-patel-announces-17-new-talukas-91382198173",
+    "https://newsonair.gov.in/gujarat-govt-approves-creation-of-new-district-named-vav-tharad"
+  ],
+  "districts": [
+    {
+      "gu": "અમદાવાદ",
+      "en": "Ahmedabad",
+      "talukas": [
+        {
+          "gu": "બાવળા",
+          "en": "Bavla"
+        },
+        {
+          "gu": "દસ્ક્રોઈ",
+          "en": "Daskroi"
+        },
+        {
+          "gu": "દેત્રોજ-રામપુરા",
+          "en": "Detroj-Rampura"
+        },
+        {
+          "gu": "ધંધુકા",
+          "en": "Dhandhuka"
+        },
+        {
+          "gu": "ધોલેરા",
+          "en": "Dholera"
+        },
+        {
+          "gu": "ધોળકા",
+          "en": "Dholka"
+        },
+        {
+          "gu": "માંડલ",
+          "en": "Mandal"
+        },
+        {
+          "gu": "સાણંદ",
+          "en": "Sanand"
+        },
+        {
+          "gu": "વિરમગામ",
+          "en": "Viramgam"
+        },
+        {
+          "gu": "અમદાવાદ શહેર",
+          "en": "Ahmedabad City"
+        }
+      ]
+    },
+    {
+      "gu": "અમરેલી",
+      "en": "Amreli",
+      "talukas": [
+        {
+          "gu": "અમરેલી",
+          "en": "Amreli"
+        },
+        {
+          "gu": "બાબરા",
+          "en": "Babra"
+        },
+        {
+          "gu": "બગસરા",
+          "en": "Bagasara"
+        },
+        {
+          "gu": "ધારી",
+          "en": "Dhari"
+        },
+        {
+          "gu": "જાફરાબાદ",
+          "en": "Jafrabad"
+        },
+        {
+          "gu": "ખાંભા",
+          "en": "Khambha"
+        },
+        {
+          "gu": "કુંકાવાવ વડિયા",
+          "en": "Kunkavav Vadia"
+        },
+        {
+          "gu": "લાઠી",
+          "en": "Lathi"
+        },
+        {
+          "gu": "લીલીયા",
+          "en": "Lilia"
+        },
+        {
+          "gu": "રાજુલા",
+          "en": "Rajula"
+        },
+        {
+          "gu": "સાવરકુંડલા",
+          "en": "Savarkundla"
+        }
+      ]
+    },
+    {
+      "gu": "આણંદ",
+      "en": "Anand",
+      "talukas": [
+        {
+          "gu": "આણંદ",
+          "en": "Anand"
+        },
+        {
+          "gu": "આંકલાવ",
+          "en": "Anklav"
+        },
+        {
+          "gu": "બોરસદ",
+          "en": "Borsad"
+        },
+        {
+          "gu": "ખંભાત",
+          "en": "Khambhat"
+        },
+        {
+          "gu": "પેટલાદ",
+          "en": "Petlad"
+        },
+        {
+          "gu": "સોજિત્રા",
+          "en": "Sojitra"
+        },
+        {
+          "gu": "તારાપુર",
+          "en": "Tarapur"
+        },
+        {
+          "gu": "ઉમરેઠ",
+          "en": "Umreth"
+        }
+      ]
+    },
+    {
+      "gu": "અરવલ્લી",
+      "en": "Aravalli",
+      "talukas": [
+        {
+          "gu": "બાયડ",
+          "en": "Bayad"
+        },
+        {
+          "gu": "ભિલોડા",
+          "en": "Bhiloda"
+        },
+        {
+          "gu": "ધનસુરા",
+          "en": "Dhansura"
+        },
+        {
+          "gu": "માલપુર",
+          "en": "Malpur"
+        },
+        {
+          "gu": "મેઘરજ",
+          "en": "Meghraj"
+        },
+        {
+          "gu": "મોડાસા",
+          "en": "Modasa"
+        },
+        {
+          "gu": "સાઠંબા",
+          "en": "Sathamba"
+        },
+        {
+          "gu": "શામળાજી",
+          "en": "Shamlaji"
+        }
+      ]
+    },
+    {
+      "gu": "બનાસકાંઠા",
+      "en": "Banaskantha",
+      "talukas": [
+        {
+          "gu": "અમીરગઢ",
+          "en": "Amirgadh"
+        },
+        {
+          "gu": "દાંતા",
+          "en": "Danta"
+        },
+        {
+          "gu": "દાંતીવાડા",
+          "en": "Dantiwada"
+        },
+        {
+          "gu": "ડીસા",
+          "en": "Deesa"
+        },
+        {
+          "gu": "ધાનેરા",
+          "en": "Dhanera"
+        },
+        {
+          "gu": "હડાદ",
+          "en": "Hadad"
+        },
+        {
+          "gu": "કાંકરેજ",
+          "en": "Kankrej"
+        },
+        {
+          "gu": "ઓગડ",
+          "en": "Ogad"
+        },
+        {
+          "gu": "પાલનપુર",
+          "en": "Palanpur"
+        },
+        {
+          "gu": "વડગામ",
+          "en": "Vadgam"
+        }
+      ]
+    },
+    {
+      "gu": "ભરૂચ",
+      "en": "Bharuch",
+      "talukas": [
+        {
+          "gu": "આમોદ",
+          "en": "Amod"
+        },
+        {
+          "gu": "અંકલેશ્વર",
+          "en": "Ankleshwar"
+        },
+        {
+          "gu": "ભરૂચ",
+          "en": "Bharuch"
+        },
+        {
+          "gu": "હાંસોટ",
+          "en": "Hansot"
+        },
+        {
+          "gu": "જંબુસર",
+          "en": "Jambusar"
+        },
+        {
+          "gu": "ઝઘડિયા",
+          "en": "Jhagadia"
+        },
+        {
+          "gu": "નેત્રંગ",
+          "en": "Netrang"
+        },
+        {
+          "gu": "વાગરા",
+          "en": "Vagra"
+        },
+        {
+          "gu": "વાલિયા",
+          "en": "Valia"
+        }
+      ]
+    },
+    {
+      "gu": "ભાવનગર",
+      "en": "Bhavnagar",
+      "talukas": [
+        {
+          "gu": "ભાવનગર",
+          "en": "Bhavnagar"
+        },
+        {
+          "gu": "ગારીયાધાર",
+          "en": "Gariadhar"
+        },
+        {
+          "gu": "ઘોઘા",
+          "en": "Ghogha"
+        },
+        {
+          "gu": "જેસર",
+          "en": "Jesar"
+        },
+        {
+          "gu": "મહુવા",
+          "en": "Mahuva"
+        },
+        {
+          "gu": "પાલીતાણા",
+          "en": "Palitana"
+        },
+        {
+          "gu": "સિહોર",
+          "en": "Sihor"
+        },
+        {
+          "gu": "તળાજા",
+          "en": "Talaja"
+        },
+        {
+          "gu": "ઉમરાળા",
+          "en": "Umrala"
+        },
+        {
+          "gu": "વલ્લભીપુર",
+          "en": "Vallabhipur"
+        }
+      ]
+    },
+    {
+      "gu": "બોટાદ",
+      "en": "Botad",
+      "talukas": [
+        {
+          "gu": "બરવાળા",
+          "en": "Barwala"
+        },
+        {
+          "gu": "બોટાદ",
+          "en": "Botad"
+        },
+        {
+          "gu": "ગઢડા",
+          "en": "Gadhada"
+        },
+        {
+          "gu": "રાણપુર",
+          "en": "Ranpur"
+        }
+      ]
+    },
+    {
+      "gu": "છોટાઉદેપુર",
+      "en": "Chhota Udepur",
+      "talukas": [
+        {
+          "gu": "બોડેલી",
+          "en": "Bodeli"
+        },
+        {
+          "gu": "છોટાઉદેપુર",
+          "en": "Chhota Udepur"
+        },
+        {
+          "gu": "જેતપુર પાવી",
+          "en": "Jetpur Pavi"
+        },
+        {
+          "gu": "કદવાલ",
+          "en": "Kadval"
+        },
+        {
+          "gu": "કવાંટ",
+          "en": "Kavant"
+        },
+        {
+          "gu": "નસવાડી",
+          "en": "Nasvadi"
+        },
+        {
+          "gu": "સંખેડા",
+          "en": "Sankheda"
+        }
+      ]
+    },
+    {
+      "gu": "દાહોદ",
+      "en": "Dahod",
+      "talukas": [
+        {
+          "gu": "દાહોદ",
+          "en": "Dahod"
+        },
+        {
+          "gu": "દેવગઢ બારિયા",
+          "en": "Devgadh Baria"
+        },
+        {
+          "gu": "ધાનપુર",
+          "en": "Dhanpur"
+        },
+        {
+          "gu": "ફતેપુરા",
+          "en": "Fatepura"
+        },
+        {
+          "gu": "ગરબાડા",
+          "en": "Garbada"
+        },
+        {
+          "gu": "ગોવિંદ ગુરુ લીમડી",
+          "en": "Govind Guru Limdi"
+        },
+        {
+          "gu": "ઝાલોદ",
+          "en": "Jhalod"
+        },
+        {
+          "gu": "લીમખેડા",
+          "en": "Limkheda"
+        },
+        {
+          "gu": "સંજેલી",
+          "en": "Sanjeli"
+        },
+        {
+          "gu": "સીંગવડ",
+          "en": "Singvad"
+        },
+        {
+          "gu": "સુખસર",
+          "en": "Sukhsar"
+        }
+      ]
+    },
+    {
+      "gu": "ડાંગ",
+      "en": "Dang",
+      "talukas": [
+        {
+          "gu": "આહવા",
+          "en": "Ahwa"
+        },
+        {
+          "gu": "સુબીર",
+          "en": "Subir"
+        },
+        {
+          "gu": "વઘઈ",
+          "en": "Waghai"
+        }
+      ]
+    },
+    {
+      "gu": "દેવભૂમિ દ્વારકા",
+      "en": "Devbhumi Dwarka",
+      "talukas": [
+        {
+          "gu": "ભાણવડ",
+          "en": "Bhanvad"
+        },
+        {
+          "gu": "દ્વારકા (ઓખામંડળ)",
+          "en": "Dwarka (Okhamandal)"
+        },
+        {
+          "gu": "કલ્યાણપુર",
+          "en": "Kalyanpur"
+        },
+        {
+          "gu": "ખંભાળિયા",
+          "en": "Khambhalia"
+        }
+      ]
+    },
+    {
+      "gu": "ગાંધીનગર",
+      "en": "Gandhinagar",
+      "talukas": [
+        {
+          "gu": "દહેગામ",
+          "en": "Dehgam"
+        },
+        {
+          "gu": "ગાંધીનગર",
+          "en": "Gandhinagar"
+        },
+        {
+          "gu": "કલોલ",
+          "en": "Kalol"
+        },
+        {
+          "gu": "માણસા",
+          "en": "Mansa"
+        }
+      ]
+    },
+    {
+      "gu": "ગીર સોમનાથ",
+      "en": "Gir Somnath",
+      "talukas": [
+        {
+          "gu": "ગીર ગઢડા",
+          "en": "Gir Gadhada"
+        },
+        {
+          "gu": "કોડીનાર",
+          "en": "Kodinar"
+        },
+        {
+          "gu": "પાટણ-વેરાવળ",
+          "en": "Patan-Veraval"
+        },
+        {
+          "gu": "સુત્રાપાડા",
+          "en": "Sutrapada"
+        },
+        {
+          "gu": "તાલાલા",
+          "en": "Talala"
+        },
+        {
+          "gu": "ઉના",
+          "en": "Una"
+        }
+      ]
+    },
+    {
+      "gu": "જામનગર",
+      "en": "Jamnagar",
+      "talukas": [
+        {
+          "gu": "ધ્રોલ",
+          "en": "Dhrol"
+        },
+        {
+          "gu": "જામજોધપુર",
+          "en": "Jamjodhpur"
+        },
+        {
+          "gu": "જામનગર ગ્રામ્ય",
+          "en": "Jamnagar Rural"
+        },
+        {
+          "gu": "જોડિયા",
+          "en": "Jodiya"
+        },
+        {
+          "gu": "કાલાવડ",
+          "en": "Kalavad"
+        },
+        {
+          "gu": "લાલપુર",
+          "en": "Lalpur"
+        }
+      ]
+    },
+    {
+      "gu": "જૂનાગઢ",
+      "en": "Junagadh",
+      "talukas": [
+        {
+          "gu": "ભેસાણ",
+          "en": "Bhesan"
+        },
+        {
+          "gu": "જૂનાગઢ",
+          "en": "Junagadh"
+        },
+        {
+          "gu": "જૂનાગઢ શહેર",
+          "en": "Junagadh City"
+        },
+        {
+          "gu": "કેશોદ",
+          "en": "Keshod"
+        },
+        {
+          "gu": "માળિયા હાટીના",
+          "en": "Malia Hatina"
+        },
+        {
+          "gu": "માણાવદર",
+          "en": "Manavadar"
+        },
+        {
+          "gu": "માંગરોળ",
+          "en": "Mangrol"
+        },
+        {
+          "gu": "મેંદરડા",
+          "en": "Mendarda"
+        },
+        {
+          "gu": "વંથલી",
+          "en": "Vanthali"
+        },
+        {
+          "gu": "વિસાવદર",
+          "en": "Visavadar"
+        }
+      ]
+    },
+    {
+      "gu": "કચ્છ",
+      "en": "Kutch",
+      "talukas": [
+        {
+          "gu": "અબડાસા",
+          "en": "Abdasa"
+        },
+        {
+          "gu": "અંજાર",
+          "en": "Anjar"
+        },
+        {
+          "gu": "ભચાઉ",
+          "en": "Bhachau"
+        },
+        {
+          "gu": "ભુજ",
+          "en": "Bhuj"
+        },
+        {
+          "gu": "ગાંધીધામ",
+          "en": "Gandhidham"
+        },
+        {
+          "gu": "લખપત",
+          "en": "Lakhpat"
+        },
+        {
+          "gu": "માંડવી",
+          "en": "Mandvi"
+        },
+        {
+          "gu": "મુંદ્રા",
+          "en": "Mundra"
+        },
+        {
+          "gu": "નખત્રાણા",
+          "en": "Nakhatrana"
+        },
+        {
+          "gu": "રાપર",
+          "en": "Rapar"
+        }
+      ]
+    },
+    {
+      "gu": "ખેડા",
+      "en": "Kheda",
+      "talukas": [
+        {
+          "gu": "ફાગવેલ",
+          "en": "Fagvel"
+        },
+        {
+          "gu": "ગળતેશ્વર",
+          "en": "Galteshwar"
+        },
+        {
+          "gu": "કપડવંજ",
+          "en": "Kapadvanj"
+        },
+        {
+          "gu": "કઠલાલ",
+          "en": "Kathlal"
+        },
+        {
+          "gu": "ખેડા",
+          "en": "Kheda"
+        },
+        {
+          "gu": "મહુધા",
+          "en": "Mahudha"
+        },
+        {
+          "gu": "માતર",
+          "en": "Matar"
+        },
+        {
+          "gu": "મહેમદાવાદ",
+          "en": "Mehmedabad"
+        },
+        {
+          "gu": "નડિયાદ ગ્રામ્ય",
+          "en": "Nadiad Rural"
+        },
+        {
+          "gu": "ઠાસરા",
+          "en": "Thasra"
+        },
+        {
+          "gu": "વસો",
+          "en": "Vaso"
+        }
+      ]
+    },
+    {
+      "gu": "મહીસાગર",
+      "en": "Mahisagar",
+      "talukas": [
+        {
+          "gu": "બાલાસિનોર",
+          "en": "Balasinor"
+        },
+        {
+          "gu": "ગોધર",
+          "en": "Godhar"
+        },
+        {
+          "gu": "કડાણા",
+          "en": "Kadana"
+        },
+        {
+          "gu": "ખાનપુર",
+          "en": "Khanpur"
+        },
+        {
+          "gu": "કોઠંબા",
+          "en": "Kothamba"
+        },
+        {
+          "gu": "લુણાવાડા",
+          "en": "Lunawada"
+        },
+        {
+          "gu": "સંતરામપુર",
+          "en": "Santrampur"
+        },
+        {
+          "gu": "વિરપુર",
+          "en": "Virpur"
+        }
+      ]
+    },
+    {
+      "gu": "મહેસાણા",
+      "en": "Mehsana",
+      "talukas": [
+        {
+          "gu": "બેચરાજી",
+          "en": "Becharaji"
+        },
+        {
+          "gu": "જોટાણા",
+          "en": "Jotana"
+        },
+        {
+          "gu": "કડી",
+          "en": "Kadi"
+        },
+        {
+          "gu": "ખેરાલુ",
+          "en": "Kheralu"
+        },
+        {
+          "gu": "મહેસાણા",
+          "en": "Mehsana"
+        },
+        {
+          "gu": "સતલાસણા",
+          "en": "Satlasana"
+        },
+        {
+          "gu": "ઊંઝા",
+          "en": "Unjha"
+        },
+        {
+          "gu": "વડનગર",
+          "en": "Vadnagar"
+        },
+        {
+          "gu": "વિજાપુર",
+          "en": "Vijapur"
+        },
+        {
+          "gu": "વિસનગર",
+          "en": "Visnagar"
+        }
+      ]
+    },
+    {
+      "gu": "મોરબી",
+      "en": "Morbi",
+      "talukas": [
+        {
+          "gu": "હળવદ",
+          "en": "Halvad"
+        },
+        {
+          "gu": "માળિયા (મિયાણા)",
+          "en": "Maliya (Miyana)"
+        },
+        {
+          "gu": "મોરબી",
+          "en": "Morbi"
+        },
+        {
+          "gu": "ટંકારા",
+          "en": "Tankara"
+        },
+        {
+          "gu": "વાંકાનેર",
+          "en": "Wankaner"
+        }
+      ]
+    },
+    {
+      "gu": "નર્મદા",
+      "en": "Narmada",
+      "talukas": [
+        {
+          "gu": "ચીકદા",
+          "en": "Chikda"
+        },
+        {
+          "gu": "ડેડિયાપાડા",
+          "en": "Dediapada"
+        },
+        {
+          "gu": "ગરુડેશ્વર",
+          "en": "Garudeshwar"
+        },
+        {
+          "gu": "નાંદોદ",
+          "en": "Nandod"
+        },
+        {
+          "gu": "સાગબારા",
+          "en": "Sagbara"
+        },
+        {
+          "gu": "તિલકવાડા",
+          "en": "Tilakwada"
+        }
+      ]
+    },
+    {
+      "gu": "નવસારી",
+      "en": "Navsari",
+      "talukas": [
+        {
+          "gu": "ચીખલી",
+          "en": "Chikhli"
+        },
+        {
+          "gu": "ગણદેવી",
+          "en": "Gandevi"
+        },
+        {
+          "gu": "જલાલપોર",
+          "en": "Jalalpore"
+        },
+        {
+          "gu": "ખેરગામ",
+          "en": "Khergam"
+        },
+        {
+          "gu": "નવસારી",
+          "en": "Navsari"
+        },
+        {
+          "gu": "વાંસદા",
+          "en": "Vansda"
+        }
+      ]
+    },
+    {
+      "gu": "પંચમહાલ",
+      "en": "Panchmahal",
+      "talukas": [
+        {
+          "gu": "ઘોઘંબા",
+          "en": "Ghoghamba"
+        },
+        {
+          "gu": "ગોધરા",
+          "en": "Godhra"
+        },
+        {
+          "gu": "હાલોલ",
+          "en": "Halol"
+        },
+        {
+          "gu": "જાંબુઘોડા",
+          "en": "Jambughoda"
+        },
+        {
+          "gu": "કાલોલ",
+          "en": "Kalol"
+        },
+        {
+          "gu": "મોરવા (હડફ)",
+          "en": "Morwa (Hadaf)"
+        },
+        {
+          "gu": "શહેરા",
+          "en": "Shehera"
+        }
+      ]
+    },
+    {
+      "gu": "પાટણ",
+      "en": "Patan",
+      "talukas": [
+        {
+          "gu": "ચાણસ્મા",
+          "en": "Chanasma"
+        },
+        {
+          "gu": "હારીજ",
+          "en": "Harij"
+        },
+        {
+          "gu": "પાટણ",
+          "en": "Patan"
+        },
+        {
+          "gu": "રાધનપુર",
+          "en": "Radhanpur"
+        },
+        {
+          "gu": "સમી",
+          "en": "Sami"
+        },
+        {
+          "gu": "સાંતલપુર",
+          "en": "Santalpur"
+        },
+        {
+          "gu": "સરસ્વતી",
+          "en": "Saraswati"
+        },
+        {
+          "gu": "શંખેશ્વર",
+          "en": "Shankheshwar"
+        },
+        {
+          "gu": "સિદ્ધપુર",
+          "en": "Sidhpur"
+        }
+      ]
+    },
+    {
+      "gu": "પોરબંદર",
+      "en": "Porbandar",
+      "talukas": [
+        {
+          "gu": "કુતિયાણા",
+          "en": "Kutiyana"
+        },
+        {
+          "gu": "પોરબંદર",
+          "en": "Porbandar"
+        },
+        {
+          "gu": "રાણાવાવ",
+          "en": "Ranavav"
+        }
+      ]
+    },
+    {
+      "gu": "રાજકોટ",
+      "en": "Rajkot",
+      "talukas": [
+        {
+          "gu": "ધોરાજી",
+          "en": "Dhoraji"
+        },
+        {
+          "gu": "ગોંડલ",
+          "en": "Gondal"
+        },
+        {
+          "gu": "જામકંડોરણા",
+          "en": "Jamkandorna"
+        },
+        {
+          "gu": "જસદણ",
+          "en": "Jasdan"
+        },
+        {
+          "gu": "જેતપુર",
+          "en": "Jetpur"
+        },
+        {
+          "gu": "કોટડા સાંગાણી",
+          "en": "Kotda Sangani"
+        },
+        {
+          "gu": "લોધિકા",
+          "en": "Lodhika"
+        },
+        {
+          "gu": "પડધરી",
+          "en": "Paddhari"
+        },
+        {
+          "gu": "રાજકોટ",
+          "en": "Rajkot"
+        },
+        {
+          "gu": "ઉપલેટા",
+          "en": "Upleta"
+        },
+        {
+          "gu": "વીંછિયા",
+          "en": "Vinchhiya"
+        }
+      ]
+    },
+    {
+      "gu": "સાબરકાંઠા",
+      "en": "Sabarkantha",
+      "talukas": [
+        {
+          "gu": "હિંમતનગર",
+          "en": "Himatnagar"
+        },
+        {
+          "gu": "ઈડર",
+          "en": "Idar"
+        },
+        {
+          "gu": "ખેડબ્રહ્મા",
+          "en": "Khedbrahma"
+        },
+        {
+          "gu": "પોશીના",
+          "en": "Poshina"
+        },
+        {
+          "gu": "પ્રાંતિજ",
+          "en": "Prantij"
+        },
+        {
+          "gu": "તલોદ",
+          "en": "Talod"
+        },
+        {
+          "gu": "વડાલી",
+          "en": "Vadali"
+        },
+        {
+          "gu": "વિજયનગર",
+          "en": "Vijaynagar"
+        }
+      ]
+    },
+    {
+      "gu": "સુરત",
+      "en": "Surat",
+      "talukas": [
+        {
+          "gu": "અંબિકા",
+          "en": "Ambika"
+        },
+        {
+          "gu": "અરેઠ",
+          "en": "Areth"
+        },
+        {
+          "gu": "બારડોલી",
+          "en": "Bardoli"
+        },
+        {
+          "gu": "ચોર્યાસી",
+          "en": "Chorasi"
+        },
+        {
+          "gu": "કામરેજ",
+          "en": "Kamrej"
+        },
+        {
+          "gu": "મહુવા",
+          "en": "Mahuva"
+        },
+        {
+          "gu": "માંડવી",
+          "en": "Mandvi"
+        },
+        {
+          "gu": "માંગરોળ",
+          "en": "Mangrol"
+        },
+        {
+          "gu": "ઓલપાડ",
+          "en": "Olpad"
+        },
+        {
+          "gu": "પલસાણા",
+          "en": "Palsana"
+        },
+        {
+          "gu": "ઉમરપાડા",
+          "en": "Umarpada"
+        },
+        {
+          "gu": "સુરત શહેર",
+          "en": "Surat City"
+        }
+      ]
+    },
+    {
+      "gu": "સુરેન્દ્રનગર",
+      "en": "Surendranagar",
+      "talukas": [
+        {
+          "gu": "ચોટીલા",
+          "en": "Chotila"
+        },
+        {
+          "gu": "ચુડા",
+          "en": "Chuda"
+        },
+        {
+          "gu": "દસાડા",
+          "en": "Dasada"
+        },
+        {
+          "gu": "ધ્રાંગધ્રા",
+          "en": "Dhrangadhra"
+        },
+        {
+          "gu": "લખતર",
+          "en": "Lakhtar"
+        },
+        {
+          "gu": "લીંબડી",
+          "en": "Limbdi"
+        },
+        {
+          "gu": "મૂળી",
+          "en": "Muli"
+        },
+        {
+          "gu": "સાયલા",
+          "en": "Sayla"
+        },
+        {
+          "gu": "થાનગઢ",
+          "en": "Thangadh"
+        },
+        {
+          "gu": "વઢવાણ",
+          "en": "Wadhwan"
+        }
+      ]
+    },
+    {
+      "gu": "તાપી",
+      "en": "Tapi",
+      "talukas": [
+        {
+          "gu": "ડોલવણ",
+          "en": "Dolvan"
+        },
+        {
+          "gu": "કુકરમુંડા",
+          "en": "Kukarmunda"
+        },
+        {
+          "gu": "નિઝર",
+          "en": "Nizar"
+        },
+        {
+          "gu": "સોનગઢ",
+          "en": "Songadh"
+        },
+        {
+          "gu": "ઉચ્છલ",
+          "en": "Uchchhal"
+        },
+        {
+          "gu": "ઉકાઈ",
+          "en": "Ukai"
+        },
+        {
+          "gu": "વાલોડ",
+          "en": "Valod"
+        },
+        {
+          "gu": "વ્યારા",
+          "en": "Vyara"
+        }
+      ]
+    },
+    {
+      "gu": "વડોદરા",
+      "en": "Vadodara",
+      "talukas": [
+        {
+          "gu": "ડભોઈ",
+          "en": "Dabhoi"
+        },
+        {
+          "gu": "દેસર",
+          "en": "Desar"
+        },
+        {
+          "gu": "કરજણ",
+          "en": "Karjan"
+        },
+        {
+          "gu": "પાદરા",
+          "en": "Padra"
+        },
+        {
+          "gu": "સાવલી",
+          "en": "Savli"
+        },
+        {
+          "gu": "શિનોર",
+          "en": "Sinor"
+        },
+        {
+          "gu": "વડોદરા",
+          "en": "Vadodara"
+        },
+        {
+          "gu": "વાઘોડિયા",
+          "en": "Vaghodia"
+        }
+      ]
+    },
+    {
+      "gu": "વલસાડ",
+      "en": "Valsad",
+      "talukas": [
+        {
+          "gu": "ધરમપુર",
+          "en": "Dharampur"
+        },
+        {
+          "gu": "કપરાડા",
+          "en": "Kaprada"
+        },
+        {
+          "gu": "નાનાપોંઢા",
+          "en": "Nanapodha"
+        },
+        {
+          "gu": "પારડી",
+          "en": "Pardi"
+        },
+        {
+          "gu": "ઉમરગામ",
+          "en": "Umbergaon"
+        },
+        {
+          "gu": "વલસાડ",
+          "en": "Valsad"
+        },
+        {
+          "gu": "વાપી",
+          "en": "Vapi"
+        }
+      ]
+    },
+    {
+      "gu": "વાવ-થરાદ",
+      "en": "Vav-Tharad",
+      "talukas": [
+        {
+          "gu": "ભાભર",
+          "en": "Bhabhar"
+        },
+        {
+          "gu": "દિયોદર",
+          "en": "Deodar"
+        },
+        {
+          "gu": "ધરણીધર",
+          "en": "Dharnidhar"
+        },
+        {
+          "gu": "લાખણી",
+          "en": "Lakhani"
+        },
+        {
+          "gu": "રાહ",
+          "en": "Rah"
+        },
+        {
+          "gu": "સુઈગામ",
+          "en": "Suigam"
+        },
+        {
+          "gu": "થરાદ",
+          "en": "Tharad"
+        },
+        {
+          "gu": "વાવ",
+          "en": "Vav"
+        }
+      ]
+    }
+  ]
+}
