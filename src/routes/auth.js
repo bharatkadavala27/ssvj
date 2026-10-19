@@ -44,8 +44,11 @@ router.post(
     const code = newOtpCode();
     await Otp.create({ phone, codeHash: hashOtp(phone, code), expiresAt: new Date(Date.now() + OTP_TTL_MS) });
     await sendOtp(phone, code);
-    // In development with the console provider, return the code so the app can be tested without SMS.
-    res.json({ sent: true, ...(env.sms.provider === 'console' && !env.isProd && { devCode: code }) });
+    // With the console provider (no SMS set up), return the code so the app can be tested without SMS:
+    // always in development, and in production only while SHOW_OTP=true (testing phase). Once a real
+    // SMS provider is set, codes are never returned.
+    const showCode = env.sms.provider === 'console' && (!env.isProd || env.showOtp);
+    res.json({ sent: true, ...(showCode && { devCode: code }) });
   }),
 );
 

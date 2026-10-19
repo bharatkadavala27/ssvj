@@ -20,6 +20,8 @@ export const env = {
   sessionSecret: required('SESSION_SECRET'),
   corsOrigins: list(process.env.CORS_ORIGINS),
   isProd: process.env.NODE_ENV === 'production',
+  // Testing mode: return the login code to the app (only while SMS_PROVIDER=console, i.e. no SMS set up).
+  showOtp: process.env.SHOW_OTP === 'true',
   sms: {
     provider: process.env.SMS_PROVIDER || 'console',
     fast2smsKey: process.env.FAST2SMS_API_KEY || '',
