@@ -29,6 +29,11 @@ router.post(
       // Turn Cloudinary account problems into something the admin can act on.
       if (err?.http_code === 403) throw new HttpError(502, 'Cloudinary refused the upload: this API key has no upload (create) permission. Use the Root API key or allow uploads for this key in Cloudinary.');
       if (err?.http_code === 401) throw new HttpError(502, 'Cloudinary rejected the API key or secret in backend/.env');
+      const tooBig = err?.http_code === 400 && /File size too large\. Got (\d+)\. Maximum is (\d+)/.exec(err.message || '');
+      if (tooBig) {
+        const mb = (n) => (n / 1024 / 1024).toFixed(1) + ' MB';
+        throw new HttpError(400, `This file is ${mb(+tooBig[1])}; Cloudinary allows at most ${mb(+tooBig[2])}. Compress it (for a PDF, e.g. ilovepdf.com/compress_pdf) or paste a link to the file instead.`);
+      }
       if (err?.http_code === 400) throw new HttpError(400, `Cloudinary could not process this file: ${err.message}`);
       throw err;
     }

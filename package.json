@@ -8,7 +8,8 @@
     "start": "node src/server.js",
     "seed": "node src/seed/seed.js",
     "create-admin": "node src/seed/create-admin.js",
-    "import-places": "node src/seed/import-places.js"
+    "import-places": "node src/seed/import-places.js",
+    "import-trustees": "node src/seed/import-trustees.js"
   },
   "type": "module",
   "dependencies": {

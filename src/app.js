@@ -21,12 +21,12 @@ export function createApp() {
       // No Origin header = native/curl request; otherwise it must be on the allow-list.
       origin: (origin, cb) => cb(null, !origin || env.corsOrigins.includes(origin)),
       allowedHeaders: ['Content-Type', 'Authorization', 'x-admin-key'],
-      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     }),
   );
   // Compression would buffer the SSE stream, so skip it there.
   app.use(compression({ filter: (req, res) => req.path !== '/api/live' && compression.filter(req, res) }));
-  app.use(express.json({ limit: '50kb' }));
+  app.use(express.json({ limit: '1mb' })); // a wedding year's donor list can run to hundreds of rows
   // Successful uptime pings (every 5 minutes) would only add noise to the log.
   app.use(morgan(env.isProd ? 'combined' : 'dev', { skip: (req, res) => req.originalUrl.startsWith('/api/health') && res.statusCode < 400 }));
 

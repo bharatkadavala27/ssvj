@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
 import { z } from 'zod';
-import { Donation, Village } from '../models/index.js';
+import { Donation } from '../models/index.js';
+import { placeList, placesByKeys } from '../lib/places.js';
 import { requireRole } from '../middleware/auth.js';
 import { HttpError, ah } from '../middleware/errors.js';
 import { donationStaffView, receiptData, recordDonation, transitionDonation } from '../lib/donations.js';
@@ -13,10 +14,9 @@ router.use(requireRole('sevak', 'admin'));
 
 const isAdmin = (req) => req.user.role === 'admin';
 
-/** Villages this caller may record donations for (admins: all). */
+/** Places (villages, talukas, districts) this caller may record donations for (admins: all). */
 async function allowedVillages(req) {
-  const filter = isAdmin(req) ? {} : { key: { $in: req.user.villages || [] } };
-  return Village.find(filter).sort({ order: 1 });
+  return isAdmin(req) ? placeList() : placesByKeys(req.user.villages || []);
 }
 
 function assertVillage(req, village) {
@@ -101,8 +101,8 @@ router.get(
 router.get(
   '/pending',
   ah(async (req, res) => {
-    const villages = (await allowedVillages(req)).map((v) => v.key);
-    const items = await Donation.find({ status: 'pledged', village: { $in: villages } })
+    const filter = isAdmin(req) ? { status: 'pledged' } : { status: 'pledged', village: { $in: req.user.villages || [] } };
+    const items = await Donation.find(filter)
       .select('+phone')
       .sort({ createdAt: -1 })
       .limit(200);

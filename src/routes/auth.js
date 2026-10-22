@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
-import { Otp, User, Village } from '../models/index.js';
+import { Otp, User } from '../models/index.js';
+import { placesByKeys } from '../lib/places.js';
 import { HttpError, ah } from '../middleware/errors.js';
 import { requireRole } from '../middleware/auth.js';
 import { hashOtp, issueToken, newOtpCode, normalizePhone, safeEqual } from '../lib/auth.js';
@@ -25,7 +26,7 @@ const phoneField = z.string().transform((v, ctx) => {
 
 /** What the app needs to pick the interface. Role comes from the database, never from the client. */
 export async function sessionUser(u) {
-  const villages = u.villages?.length ? await Village.find({ key: { $in: u.villages } }).sort({ order: 1 }) : [];
+  const villages = await placesByKeys(u.villages || []);
   return { id: String(u._id || u.id), name: u.name, phone: u.phone, role: u.role, villages };
 }
 

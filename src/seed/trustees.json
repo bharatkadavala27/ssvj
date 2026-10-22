@@ -1,0 +1,32 @@
+{
+  "roles": [
+    { "key": "pramukh", "gu": "પ્રમુખશ્રી", "en": "President" },
+    { "key": "mahamantri", "gu": "મહામંત્રીશ્રી", "en": "General Secretary" },
+    { "key": "upapramukh", "gu": "ઉપપ્રમુખશ્રી", "en": "Vice President" },
+    { "key": "mantri", "gu": "મંત્રીશ્રી", "en": "Secretary" },
+    { "key": "sabhya", "gu": "સભ્યશ્રી", "en": "Member" }
+  ],
+  "trustees": [
+    { "role": "pramukh", "gu": "શ્રી મનજીભાઈ લાખાભાઈ કોદાવલા", "en": "Shri Manjibhai Lakhabhai Kodavala", "phone": "9974945658" },
+    { "role": "mahamantri", "gu": "શ્રી ગીરીશભાઈ કારાભાઈ શિર", "en": "Shri Girishbhai Karabhai Shir", "phone": "9722315218" },
+    { "role": "upapramukh", "gu": "શ્રી પરસોતમભાઈ રત્નાભાઈ ભંભાણા", "en": "Shri Parsotambhai Ratnabhai Bhambhana", "phone": "9898123771" },
+    { "role": "mantri", "gu": "શ્રી રસિકભાઈ ઝીણાભાઈ કળથિયા", "en": "Shri Rasikbhai Zinabhai Kalthiya", "phone": "9879435989" },
+    { "role": "mantri", "gu": "શ્રી અજયભાઈ ઉકાભાઈ પાથર", "en": "Shri Ajaybhai Ukabhai Pathar", "phone": "8141669354" },
+    { "role": "sabhya", "gu": "શ્રી અમિતભાઈ અરજણભાઈ રાઠોડ", "en": "Shri Amitbhai Arjanbhai Rathod", "phone": "8000044094" },
+    { "role": "sabhya", "gu": "શ્રી મનિષભાઈ કાનાભાઈ કળથિયા", "en": "Shri Manishbhai Kanabhai Kalthiya", "phone": "9978075138" },
+    { "role": "sabhya", "gu": "શ્રી મહેન્દ્રભાઈ માવજીભાઈ મારૂ", "en": "Shri Mahendrabhai Mavjibhai Maru", "phone": "9825993028" },
+    { "role": "sabhya", "gu": "શ્રી શૈલેષભાઈ શામજીભાઈ મારૂ", "en": "Shri Shaileshbhai Shamjibhai Maru", "phone": "9879561846" },
+    { "role": "sabhya", "gu": "શ્રી રણજીતભાઈ વસરામભાઈ ચુડાસમા", "en": "Shri Ranjitbhai Vasrambhai Chudasama", "phone": "9737619626" },
+    { "role": "sabhya", "gu": "શ્રી ભુપતભાઈ નારણભાઈ ચૌહાણ", "en": "Shri Bhupatbhai Naranbhai Chauhan", "phone": "9737619626" },
+    { "role": "sabhya", "gu": "શ્રી લખમણભાઈ મનજીભાઈ ગોરફાડ", "en": "Shri Lakhmanbhai Manjibhai Gorfad", "phone": "9974202872" },
+    { "role": "sabhya", "gu": "શ્રી ભીખાભાઈ કાનાભાઈ કોદાવલા", "en": "Shri Bhikhabhai Kanabhai Kodavala", "phone": "8141060938" },
+    { "role": "sabhya", "gu": "શ્રી ગોવિંદભાઈ લખમણભાઈ કોદાવલા", "en": "Shri Govindbhai Lakhmanbhai Kodavala", "phone": "9824953117" },
+    { "role": "sabhya", "gu": "શ્રી જેન્તિભાઈ વસરામભાઈ કોદાવલા", "en": "Shri Jentibhai Vasrambhai Kodavala", "phone": "9904182458" },
+    { "role": "sabhya", "gu": "શ્રી મહેશભાઈ ધીરૂભાઈ કોદાવલા", "en": "Shri Maheshbhai Dhirubhai Kodavala", "phone": "9725841731" },
+    { "role": "sabhya", "gu": "શ્રી જયદીપભાઈ ગોરધનભાઈ સોલંકી", "en": "Shri Jaydipbhai Gordhanbhai Solanki", "phone": "7434052235" },
+    { "role": "sabhya", "gu": "શ્રી મુકેશભાઈ દેવશીભાઈ કળથિયા", "en": "Shri Mukeshbhai Devshibhai Kalthiya", "phone": "9726101293" },
+    { "role": "sabhya", "gu": "શ્રી ભરતભાઈ નરશીભાઈ સોલંકી", "en": "Shri Bharatbhai Narshibhai Solanki", "phone": "9879173589" },
+    { "role": "sabhya", "gu": "શ્રી વિક્રમભાઈ રામજીભાઈ ચુડાસમા", "en": "Shri Vikrambhai Ramjibhai Chudasama", "phone": "9925448987" },
+    { "role": "sabhya", "gu": "શ્રી સંજયભાઈ ગોરધનભાઈ ભંભાણા", "en": "Shri Sanjaybhai Gordhanbhai Bhambhana", "phone": "9974945492" }
+  ]
+}

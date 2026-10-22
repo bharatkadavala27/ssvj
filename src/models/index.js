@@ -40,6 +40,9 @@ const VillageSchema = new Schema(
   { timestamps: true, toJSON: jsonOptions },
 );
 
+/** Built-in progress icons for the live-donation card; drawn in the app (frontend/src/components/CampaignGauge.jsx). */
+export const GAUGE_ICONS = ['temple', 'rings', 'house', 'heart', 'book'];
+
 const CampaignSchema = new Schema(
   {
     key: { type: String, required: true, unique: true, lowercase: true, trim: true },
@@ -56,6 +59,14 @@ const CampaignSchema = new Schema(
       title: { type: Localized, default: null },
       date: { type: Date, default: null },
       venue: { type: Localized, default: null },
+    },
+    // Progress icon on the live-donation card: an uploaded image (any format) replaces the built-in icon.
+    // style "photo" turns the image from grey to full colour as the total grows; "shape" fills a transparent
+    // PNG/SVG's silhouette with the theme colour, like the built-in icons.
+    gauge: {
+      icon: { type: String, enum: GAUGE_ICONS, default: 'temple' },
+      image: { type: String, default: null },
+      style: { type: String, enum: ['photo', 'shape'], default: 'photo' },
     },
   },
   { timestamps: true, toJSON: jsonOptions },
@@ -244,6 +255,171 @@ const SettingsSchema = new Schema(
   { timestamps: true, toJSON: { versionKey: false } },
 );
 
+/** What a home-screen quick link opens. "activities" lists the Activity items whose section is the link's key. */
+export const QUICK_ACTIONS = ['activities', 'weddings', 'gallery', 'trustees', 'events', 'donors', 'report', 'link'];
+
+/** Home-screen quick link tile (ઝડપી લિંક), managed in the dashboard. */
+const QuickLinkSchema = new Schema(
+  {
+    key: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    label: { type: Localized, required: true },
+    icon: { type: String, default: 'file' }, // built-in icon name (frontend/src/components/quickIcons.jsx)
+    iconImage: { type: String, default: null }, // uploaded icon, replaces the built-in one
+    action: { type: String, enum: QUICK_ACTIONS, default: 'activities' },
+    intro: { type: Localized, default: null }, // shown at the top of an activities page
+    link: { type: String, default: null, trim: true }, // for action "link"
+    order: { type: Number, default: 0 },
+    active: { type: Boolean, default: true },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+
+/** An item on an activities page (social activities, education, vidyarthi bhavan…). */
+const ActivitySchema = new Schema(
+  {
+    section: { type: String, required: true, lowercase: true, index: true }, // QuickLink key
+    title: { type: Localized, required: true },
+    date: { type: Date, default: null },
+    place: { type: Localized, default: null },
+    description: { type: Localized, default: null },
+    photos: { type: [String], default: [] },
+    pdf: { type: String, default: null }, // optional document (PDF)
+    order: { type: Number, default: 0 },
+    published: { type: Boolean, default: true },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+
+const WeddingDonorSchema = new Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    village: { type: String, default: null, trim: true },
+    amount: { type: Number, default: null, min: 0 },
+    details: { type: String, default: null, trim: true }, // e.g. an item donated
+  },
+  { _id: false },
+);
+const WeddingExpenseSchema = new Schema(
+  { item: { type: String, required: true, trim: true }, amount: { type: Number, default: 0, min: 0 } },
+  { _id: false },
+);
+const FactSchema = new Schema(
+  { label: { type: String, required: true, trim: true }, value: { type: String, default: '', trim: true } },
+  { _id: false },
+);
+
+/**
+ * One year of the samuh lagna (mass wedding): couples, donors, expenses, report PDF, photos and any other
+ * facts. A linked campaign adds that campaign's donations from the app to the donor list.
+ */
+const WeddingYearSchema = new Schema(
+  {
+    year: { type: String, required: true, trim: true }, // e.g. "2025-26"
+    title: { type: Localized, default: null }, // e.g. "29મો સમૂહ લગ્નોત્સવ"
+    date: { type: Date, default: null },
+    venue: { type: Localized, default: null },
+    couples: { type: Number, default: null, min: 0 },
+    photo: { type: String, default: null },
+    description: { type: Localized, default: null },
+    reportUrl: { type: String, default: null },
+    campaign: { type: String, default: null, lowercase: true },
+    facts: { type: [FactSchema], default: [] },
+    donors: { type: [WeddingDonorSchema], default: [] },
+    expenses: { type: [WeddingExpenseSchema], default: [] },
+    photos: { type: [String], default: [] },
+    order: { type: Number, default: 0 },
+    published: { type: Boolean, default: true },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+
+/** Trustee board designation (પ્રમુખ, મહામંત્રી, …), managed by the admin; `order` sets the order on the trustees screen. */
+const TrusteeRoleSchema = new Schema(
+  {
+    key: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    name: { type: Localized, required: true },
+    order: { type: Number, default: 0 },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+
+const TrusteeSchema = new Schema(
+  {
+    name: { type: Localized, required: true },
+    role: { type: String, required: true, lowercase: true, index: true }, // TrusteeRole key
+    phone: { type: String, default: null, trim: true },
+    photo: { type: String, default: null },
+    village: { type: String, default: null, lowercase: true }, // Village key
+    order: { type: Number, default: 0 }, // within the designation
+    active: { type: Boolean, default: true },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+
+/** Relation of a family member to the registered head of the family (labels live in the frontend). */
+export const RELATIONS = [
+  'wife', 'husband', 'son', 'daughter', 'father', 'mother', 'brother', 'sister',
+  'daughterInLaw', 'sisterInLaw', 'grandson', 'granddaughter', 'other',
+];
+
+const PersonSchema = new Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    relation: { type: String, enum: RELATIONS, default: 'other' },
+    birthYear: { type: Number, default: null },
+    education: { type: String, default: null, trim: true },
+    occupation: { type: String, default: null, trim: true },
+    phone: { type: String, default: null },
+  },
+  { _id: false },
+);
+
+/**
+ * A family registered as members of the samaj: the head plus family members. Registered from the app by a
+ * logged-in user (one per account, `userId`) or entered by an admin. Contact details are admin/owner only.
+ */
+const MemberSchema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: 'User', default: null },
+    name: { type: String, required: true, trim: true },
+    phone: { type: String, default: null },
+    village: { type: String, required: true, lowercase: true, index: true },
+    currentPlace: { type: String, default: null, trim: true }, // હાલ રહેઠાણ
+    address: { type: String, default: null, trim: true },
+    birthYear: { type: Number, default: null },
+    education: { type: String, default: null, trim: true },
+    occupation: { type: String, default: null, trim: true },
+    family: { type: [PersonSchema], default: [] },
+    source: { type: String, enum: ['app', 'admin'], default: 'app' },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+MemberSchema.index({ userId: 1 }, { unique: true, partialFilterExpression: { userId: { $type: 'objectId' } } });
+
+/**
+ * Who changed what and when: donations (pledged, collected, edited, approved, rejected, deleted…) and every
+ * dashboard edit. `changes` holds field-level before/after; `snapshot` keeps a deleted record.
+ */
+const ActivityLogSchema = new Schema(
+  {
+    actor: {
+      id: { type: Schema.Types.ObjectId, ref: 'User', default: null },
+      name: { type: String, default: null },
+      phone: { type: String, default: null },
+      role: { type: String, default: null }, // null: a donor using the app without logging in
+    },
+    action: { type: String, required: true, index: true }, // create | update | delete | approve | reject | restore | collect | pledge
+    entity: { type: String, required: true, index: true }, // donation | campaigns | members | users | settings…
+    entityId: { type: String, default: null, index: true },
+    label: { type: String, default: null }, // e.g. "#557 · શ્રી રમેશભાઈ · ₹5,100"
+    changes: { type: [{ _id: false, field: String, from: Schema.Types.Mixed, to: Schema.Types.Mixed }], default: [] },
+    note: { type: String, default: null }, // reject reason etc.
+    snapshot: { type: Schema.Types.Mixed, default: null },
+  },
+  { timestamps: { createdAt: true, updatedAt: false }, toJSON: jsonOptions },
+);
+ActivityLogSchema.index({ createdAt: -1 });
+
 /** Atomic sequences (receipt numbers). */
 const CounterSchema = new Schema({ _id: String, seq: { type: Number, default: 0 } }, { versionKey: false });
 
@@ -283,7 +459,14 @@ export const Sponsor = model('Sponsor', SponsorSchema);
 export const Banner = model('Banner', BannerSchema);
 export const Gallery = model('Gallery', GallerySchema);
 export const Report = model('Report', ReportSchema);
+export const QuickLink = model('QuickLink', QuickLinkSchema);
+export const Activity = model('Activity', ActivitySchema);
+export const WeddingYear = model('WeddingYear', WeddingYearSchema);
+export const TrusteeRole = model('TrusteeRole', TrusteeRoleSchema);
+export const Trustee = model('Trustee', TrusteeSchema);
+export const Member = model('Member', MemberSchema);
 export const Settings = model('Settings', SettingsSchema);
 export const Counter = model('Counter', CounterSchema);
+export const ActivityLog = model('ActivityLog', ActivityLogSchema);
 export const User = model('User', UserSchema);
 export const Otp = model('Otp', OtpSchema);
