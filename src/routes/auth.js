@@ -2,7 +2,7 @@ import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
 import { Otp, User } from '../models/index.js';
-import { placesByKeys } from '../lib/places.js';
+import { coveredPlaces, placesByKeys } from '../lib/places.js';
 import { HttpError, ah } from '../middleware/errors.js';
 import { requireRole } from '../middleware/auth.js';
 import { hashOtp, issueToken, newOtpCode, normalizePhone, safeEqual } from '../lib/auth.js';
@@ -26,8 +26,12 @@ const phoneField = z.string().transform((v, ctx) => {
 
 /** What the app needs to pick the interface. Role comes from the database, never from the client. */
 export async function sessionUser(u) {
-  const villages = await placesByKeys(u.villages || []);
-  return { id: String(u._id || u.id), name: u.name, phone: u.phone, role: u.role, villages };
+  const assigned = u.villages || [];
+  const villages = await placesByKeys(assigned);
+  // A sevak assigned a taluka or district may record donations for every place inside it.
+  const wide = assigned.some((k) => k.includes(':'));
+  const places = wide ? await placesByKeys([...(await coveredPlaces(assigned))]) : villages;
+  return { id: String(u._id || u.id), name: u.name, phone: u.phone, role: u.role, villages, places };
 }
 
 router.post(
@@ -60,12 +64,11 @@ router.post(
     const { phone, code, name } = z
       .object({ phone: phoneField, code: z.string().regex(/^\d{6}$/), name: z.string().trim().max(60).optional() })
       .parse(req.body);
-    const otp = await Otp.findOne({ phone, expiresAt: { $gt: new Date() } }).sort({ createdAt: -1 });
-    if (!otp || otp.attempts >= MAX_ATTEMPTS) throw new HttpError(400, 'Code expired. Request a new one.');
-    if (!safeEqual(otp.codeHash, hashOtp(phone, code))) {
-      await Otp.updateOne({ _id: otp._id }, { $inc: { attempts: 1 } });
-      throw new HttpError(400, 'Wrong code');
-    }
+    const latest = await Otp.findOne({ phone, expiresAt: { $gt: new Date() } }).sort({ createdAt: -1 });
+    // Count the attempt before comparing, atomically, so parallel guesses can't exceed the limit.
+    const otp = latest && (await Otp.findOneAndUpdate({ _id: latest._id, attempts: { $lt: MAX_ATTEMPTS } }, { $inc: { attempts: 1 } }, { new: true }));
+    if (!otp) throw new HttpError(400, 'Code expired. Request a new one.');
+    if (!safeEqual(otp.codeHash, hashOtp(phone, code))) throw new HttpError(400, 'Wrong code');
     await Otp.deleteMany({ phone });
 
     // First login creates a public account; sevak/admin roles are only ever set by an admin.
@@ -91,6 +94,7 @@ router.patch(
   requireRole(),
   ah(async (req, res) => {
     const { name } = z.object({ name: z.string().trim().min(1).max(60) }).parse(req.body);
+    if (!req.user.id) throw new HttpError(400, 'Log in with a mobile number to change the name');
     const user = await User.findByIdAndUpdate(req.user.id, { name }, { new: true });
     res.json(await sessionUser(user));
   }),

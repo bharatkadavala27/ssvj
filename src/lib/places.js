@@ -32,7 +32,22 @@ export async function placesExist(keys = []) {
  * Every place, for pickers: villages first, then talukas and districts. `sub` is the line shown under
  * the name (a village's taluka, a taluka's district).
  */
+let cached = null;
+/** Forget the cached place list (after villages, talukas or districts change). */
+export function clearPlaceCache() {
+  cached = null;
+}
+
 export async function placeList() {
+  // Read on every /home request, so kept in memory (single process); the admin routes clear it on
+  // changes and it expires after 10 minutes for edits made by scripts such as import-places.
+  if (cached && Date.now() - cached.at < 10 * 60 * 1000) return cached.list;
+  const list = await loadPlaceList();
+  cached = { at: Date.now(), list };
+  return list;
+}
+
+async function loadPlaceList() {
   const [villages, talukas, districts] = await Promise.all([
     Village.find().sort({ order: 1 }).lean(),
     Taluka.find().sort({ district: 1, order: 1, 'name.en': 1 }).lean(),
@@ -64,6 +79,36 @@ export async function placeInfo(key) {
   }
   const d = await District.findOne({ key: bareKey(key) });
   return d && { key, kind, name: null, taluka: null, district: d.name };
+}
+
+/**
+ * Every place key a set of sevak assignments covers: an assigned taluka covers its villages, an assigned
+ * district its talukas and their villages. Keys are lowercase.
+ */
+export async function coveredPlaces(assigned = []) {
+  const keys = new Set(assigned.map((k) => String(k).toLowerCase()));
+  const districts = [...keys].filter((k) => placeKind(k) === 'district').map(bareKey);
+  let talukas = [...keys].filter((k) => placeKind(k) === 'taluka').map(bareKey);
+  if (districts.length) {
+    const inDistricts = (await Taluka.find({ district: { $in: districts } }, { key: 1 }).lean()).map((t) => t.key);
+    talukas = [...new Set([...talukas, ...inDistricts])];
+  }
+  for (const t of talukas) keys.add(`taluka:${t}`);
+  if (talukas.length) {
+    for (const v of await Village.find({ talukaKey: { $in: talukas } }, { key: 1 }).lean()) keys.add(v.key);
+  }
+  return keys;
+}
+
+/** Keys of every place (village, "taluka:<key>", "district:<key>") whose Gujarati or English name matches `re`. */
+export async function placeKeysMatching(re) {
+  const byName = { $or: [{ 'name.gu': re }, { 'name.en': re }] };
+  const [villages, talukas, districts] = await Promise.all([
+    Village.find(byName, { key: 1 }).lean(),
+    Taluka.find(byName, { key: 1 }).lean(),
+    District.find(byName, { key: 1 }).lean(),
+  ]);
+  return [...villages.map((v) => v.key), ...talukas.map((t) => `taluka:${t.key}`), ...districts.map((d) => `district:${d.key}`)];
 }
 
 /** Places for a list of keys (a sevak's assignments), in list order, with display names. */

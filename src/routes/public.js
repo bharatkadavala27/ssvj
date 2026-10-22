@@ -18,7 +18,6 @@ import {
   Trustee,
   TrusteeRole,
   User,
-  Village,
   WeddingYear,
 } from '../models/index.js';
 import { HttpError, ah } from '../middleware/errors.js';
@@ -28,9 +27,9 @@ import { campaignStats, donationView, receiptData, recordDonation, topDonors } f
 import { eventView } from '../lib/format.js';
 import { subscribe } from '../lib/live.js';
 import { cloudinaryReady } from '../lib/cloudinary.js';
-import { placeList } from '../lib/places.js';
+import { placeKeysMatching, placeList } from '../lib/places.js';
 import { logActivity } from '../lib/activity.js';
-import { checkMemberVillage, memberFilter, memberInput, memberListQuery, memberPublicView, memberSummary, memberView } from '../lib/members.js';
+import { checkMemberVillage, findOrLinkMember, memberFilter, memberInput, memberListQuery, memberPublicView, memberSummary, memberView } from '../lib/members.js';
 
 const router = Router();
 const visible = { status: { $ne: 'rejected' } };
@@ -150,8 +149,7 @@ router.get(
     if (q.before) filter.createdAt = { $lt: new Date(q.before) };
     if (q.q) {
       const re = new RegExp(escapeRe(q.q), 'i');
-      const villageKeys = (await Village.find({ $or: [{ 'name.gu': re }, { 'name.en': re }] })).map((v) => v.key);
-      filter.$or = [{ 'name.gu': re }, { 'name.en': re }, { village: { $in: villageKeys } }];
+      filter.$or = [{ 'name.gu': re }, { 'name.en': re }, { village: { $in: await placeKeysMatching(re) } }];
     }
     const items = await Donation.find(filter).sort({ createdAt: -1 }).limit(q.limit);
     const last = items[items.length - 1];
@@ -169,7 +167,7 @@ const donationInput = z
     material: z.string().trim().min(1).max(120).optional(),
     name: z.string().trim().max(60).optional(),
     nameEn: z.string().trim().max(60).optional(),
-    village: z.string().min(1).max(80),
+    village: z.string().trim().toLowerCase().min(1).max(80),
     anon: z.boolean().default(false),
   })
   .refine((d) => d.amount || d.material, { message: 'amount or material is required' });
@@ -184,7 +182,7 @@ router.post(
     const input = donationInput.parse(req.body);
     // A logged-in donor's pledge is linked to their account, so it shows in their history.
     const me = req.user?.id ? req.user : null;
-    const { doc, ...result } = await recordDonation(me ? { ...input, phone: me.phone } : input, { userId: me?.id || null });
+    const { doc, ...result } = await recordDonation(me ? { ...input, phone: me.phone } : input, { userId: me?.id || null, actor: me });
     res.status(201).json(result);
   }),
 );
@@ -228,7 +226,13 @@ router.get(
 router.get('/gallery', ah(async (req, res) => res.json(await Gallery.find({ published: true }).sort({ order: 1 }))));
 router.get('/reports', ah(async (req, res) => res.json(await Report.find({ published: true }).sort({ year: -1 }))));
 
-router.get('/top-donors', ah(async (req, res) => res.json(await topDonors(Math.min(Number(req.query.limit) || 10, 50)))));
+router.get(
+  '/top-donors',
+  ah(async (req, res) => {
+    const limit = z.coerce.number().int().min(1).max(50).catch(10).parse(req.query.limit);
+    res.json(await topDonors(limit));
+  }),
+);
 router.get('/events', ah(async (req, res) => res.json(await upcomingEvents())));
 router.get(
   '/notifications',
@@ -268,10 +272,20 @@ router.get(
   '/weddings',
   ah(async (req, res) => {
     const years = await WeddingYear.find({ published: true }, { photos: 0, description: 0 }).sort({ order: 1, year: -1 });
+    // Same totals as the year page: typed-in donors plus the linked campaign's received donations.
+    const keys = [...new Set(years.map((y) => y.campaign).filter(Boolean))];
+    const fromApp = keys.length
+      ? await Donation.aggregate([
+          { $match: { campaign: { $in: keys }, status: { $in: ['collected', 'approved'] } } },
+          { $group: { _id: '$campaign', count: { $sum: 1 }, amount: { $sum: { $ifNull: ['$amount', 0] } } } },
+        ])
+      : [];
+    const app = Object.fromEntries(fromApp.map((g) => [g._id, g]));
     res.json(
       years.map((y) => {
         const { donors, expenses, facts, ...rest } = y.toJSON();
-        return { ...rest, donorCount: donors.length, donorTotal: sum(donors, 'amount'), expenseTotal: sum(expenses, 'amount') };
+        const extra = app[y.campaign] || { count: 0, amount: 0 };
+        return { ...rest, donorCount: donors.length + extra.count, donorTotal: sum(donors, 'amount') + extra.amount, expenseTotal: sum(expenses, 'amount') };
       }),
     );
   }),
@@ -289,7 +303,8 @@ router.get(
       const c = await Campaign.findOne({ key: doc.campaign });
       if (c) {
         campaign = campaignView(c);
-        appDonors = (await Donation.find({ ...visible, campaign: c.key }).sort({ amount: -1, createdAt: 1 }).limit(1000)).map(donationView);
+        // Only money actually received: unverified app pledges stay off the official list.
+        appDonors = (await Donation.find({ campaign: c.key, status: { $in: ['collected', 'approved'] } }).sort({ amount: -1, createdAt: 1 }).limit(1000)).map(donationView);
       }
     }
     res.json({ ...doc.toJSON(), campaignStats: campaign, appDonors });
@@ -322,10 +337,7 @@ router.get(
   '/me/member',
   requireRole(),
   ah(async (req, res) => {
-    let doc = req.user.id && (await Member.findOne({ userId: req.user.id }));
-    if (!doc && req.user.id && req.user.phone) {
-      doc = await Member.findOneAndUpdate({ userId: null, phone: req.user.phone }, { userId: req.user.id }, { new: true });
-    }
+    const doc = await findOrLinkMember(req.user);
     res.json(doc ? memberView(doc) : null);
   }),
 );
@@ -340,13 +352,22 @@ router.put(
     if (!req.user.id) throw new HttpError(400, 'Log in with a mobile number to register');
     const input = memberInput.parse(req.body);
     await checkMemberVillage(input.village);
-    const doc = await Member.findOneAndUpdate(
-      { userId: req.user.id },
-      { ...input, phone: input.phone || req.user.phone, userId: req.user.id, $setOnInsert: { source: 'app' } },
-      { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
-    );
-    if (!req.user.name) await User.updateOne({ _id: req.user.id }, { name: input.name });
-    await logActivity({ actor: req.user, action: doc.createdAt.getTime() === doc.updatedAt.getTime() ? 'create' : 'update', entity: 'members', entityId: doc._id, label: doc.name, note: 'From the app' });
+    const fields = { ...input, phone: input.phone || req.user.phone };
+    const existing = await findOrLinkMember(req.user);
+    let doc;
+    if (existing) {
+      doc = await Member.findByIdAndUpdate(existing._id, fields, { new: true, runValidators: true });
+    } else {
+      try {
+        doc = await Member.create({ ...fields, userId: req.user.id, source: 'app' });
+      } catch (err) {
+        if (err?.code !== 11000) throw err;
+        // Saved twice at once: update the record the other request created.
+        doc = await Member.findOneAndUpdate({ userId: req.user.id }, fields, { new: true, runValidators: true });
+      }
+    }
+    if (!req.user.name) await User.updateOne({ _id: req.user.id }, { name: input.name.slice(0, 60) });
+    await logActivity({ actor: req.user, action: existing ? 'update' : 'create', entity: 'members', entityId: doc._id, label: doc.name, note: 'From the app' });
     res.json(memberView(doc));
   }),
 );

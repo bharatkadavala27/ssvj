@@ -2,7 +2,7 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import { z } from 'zod';
 import { Donation } from '../models/index.js';
-import { placeList, placesByKeys } from '../lib/places.js';
+import { coveredPlaces, placeList, placesByKeys } from '../lib/places.js';
 import { requireRole } from '../middleware/auth.js';
 import { HttpError, ah } from '../middleware/errors.js';
 import { donationStaffView, receiptData, recordDonation, transitionDonation } from '../lib/donations.js';
@@ -16,13 +16,14 @@ const isAdmin = (req) => req.user.role === 'admin';
 
 /** Places (villages, talukas, districts) this caller may record donations for (admins: all). */
 async function allowedVillages(req) {
-  return isAdmin(req) ? placeList() : placesByKeys(req.user.villages || []);
+  return isAdmin(req) ? placeList() : placesByKeys([...(await coveredPlaces(req.user.villages || []))]);
 }
 
-function assertVillage(req, village) {
-  if (!isAdmin(req) && !(req.user.villages || []).includes(village)) {
-    throw new HttpError(403, 'This village is not assigned to you');
-  }
+/** An assigned taluka or district covers the places inside it. */
+async function assertVillage(req, village) {
+  if (isAdmin(req)) return;
+  const covered = await coveredPlaces(req.user.villages || []);
+  if (!covered.has(String(village).toLowerCase())) throw new HttpError(403, 'This village is not assigned to you');
 }
 
 router.get('/villages', ah(async (req, res) => res.json(await allowedVillages(req))));
@@ -42,7 +43,7 @@ router.post(
     const input = z
       .object({
         campaign: z.string(),
-        village: z.string(),
+        village: z.string().trim().toLowerCase().min(1).max(80),
         amount: z.coerce.number().int().min(1).max(100_000_000).optional(),
         material: optText(120),
         name: optText(80),
@@ -64,7 +65,7 @@ router.post(
       })
       .refine((d) => d.amount || d.material, { message: 'amount or material is required' })
       .parse(req.body);
-    assertVillage(req, input.village);
+    await assertVillage(req, input.village);
     const { doc } = await recordDonation(input, {
       source: isAdmin(req) ? 'admin' : 'sevak',
       status: isAdmin(req) ? 'approved' : 'collected',
@@ -101,7 +102,7 @@ router.get(
 router.get(
   '/pending',
   ah(async (req, res) => {
-    const filter = isAdmin(req) ? { status: 'pledged' } : { status: 'pledged', village: { $in: req.user.villages || [] } };
+    const filter = isAdmin(req) ? { status: 'pledged' } : { status: 'pledged', village: { $in: [...(await coveredPlaces(req.user.villages || []))] } };
     const items = await Donation.find(filter)
       .select('+phone')
       .sort({ createdAt: -1 })
@@ -116,7 +117,12 @@ router.post(
   ah(async (req, res) => {
     const existing = await Donation.findById(req.params.id);
     if (!existing) throw new HttpError(404, 'Not found');
-    assertVillage(req, existing.village);
+    await assertVillage(req, existing.village);
+    // Only an app pledge can be collected here; a rejected donation is restored only by an admin.
+    if (existing.status !== 'pledged') {
+      if (existing.status === 'collected' || existing.status === 'approved') return res.json(await staffReceipt(existing));
+      throw new HttpError(409, 'This donation was rejected; only an admin can restore it');
+    }
     const doc = await transitionDonation(req.params.id, isAdmin(req) ? 'approved' : 'collected', req.user);
     res.json(await staffReceipt(doc));
   }),

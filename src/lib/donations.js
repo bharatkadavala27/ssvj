@@ -35,12 +35,13 @@ const editable = (d) => ({
 });
 
 /**
- * Donors ranked by total given (named, cash donations only). `id` ("village:ગુજરાતી name") is what
- * home-slider customisations (Banner.topDonorId) refer to.
+ * Donors ranked by total given (named, cash donations only). Only approved donations count, so an
+ * unverified pledge from the app never reaches the home slider or the top-donor list. `id`
+ * ("village:ગુજરાતી name") is what home-slider customisations (Banner.topDonorId) refer to.
  */
 export async function topDonors(limit = 10) {
   const rows = await Donation.aggregate([
-    { $match: { status: { $ne: 'rejected' }, anon: false, amount: { $gt: 0 } } },
+    { $match: { status: 'approved', anon: false, amount: { $gt: 0 } } },
     {
       $group: {
         _id: { name: '$name.gu', village: '$village' },
@@ -152,7 +153,7 @@ export async function recordDonation(input, { source = 'app', status = 'pledged'
     entity: 'donation',
     entityId: donation._id,
     label: donationLabel(donation),
-    note: source === 'app' ? 'Pledged in the app' : source === 'sevak' ? 'Receipt issued by a sevak' : 'Entered in the dashboard (approved)',
+    note: source === 'app' ? 'Pledged in the app' : source === 'sevak' ? 'Receipt issued by a sevak' : 'Entered by an admin (approved)',
   });
   return { donation: view, stats: campaignStats(updated), receiptToken: donation.receiptToken, doc: donation };
 }
@@ -171,6 +172,7 @@ export async function transitionDonation(id, to, actor, { reason } = {}) {
   if (!donation) throw new HttpError(404, 'Donation not found');
   if (donation.status === to) return donation;
   const from = donation.status;
+  const receiptBefore = donation.receiptNo ?? null;
   if (!TRANSITIONS[donation.status]?.includes(to)) {
     throw new HttpError(409, `Cannot change a ${donation.status} donation to ${to}`);
   }
@@ -195,6 +197,8 @@ export async function transitionDonation(id, to, actor, { reason } = {}) {
     if (updated) broadcast('stats', campaignStats(updated));
   }
   broadcast('status', { id: String(donation._id), status: to });
+  // Approving (or un-approving) changes the top donors: open apps reload the home slider.
+  if (to === 'approved' || from === 'approved') broadcast('refresh', { at: Date.now() });
   const action = to === 'approved' ? 'approve' : to === 'rejected' ? 'reject' : from === 'rejected' ? 'restore' : 'collect';
   await logActivity({
     actor,
@@ -202,7 +206,7 @@ export async function transitionDonation(id, to, actor, { reason } = {}) {
     entity: 'donation',
     entityId: donation._id,
     label: donationLabel(donation),
-    changes: [{ field: 'status', from, to }, ...(to !== 'rejected' && from === 'pledged' && donation.receiptNo ? [{ field: 'receiptNo', from: null, to: donation.receiptNo }] : [])],
+    changes: [{ field: 'status', from, to }, ...(donation.receiptNo !== receiptBefore ? [{ field: 'receiptNo', from: receiptBefore, to: donation.receiptNo }] : [])],
     note: to === 'rejected' ? reason || null : null,
   });
   return donation;
@@ -215,6 +219,9 @@ export async function transitionDonation(id, to, actor, { reason } = {}) {
 export async function updateDonation(id, input, actor) {
   const d = await Donation.findById(id).select('+phone');
   if (!d) throw new HttpError(404, 'Donation not found');
+  if (input.updatedAt && new Date(input.updatedAt).getTime() !== d.updatedAt.getTime()) {
+    throw new HttpError(409, 'This donation was changed by someone else since you opened it. Close the form, reload and try again.');
+  }
   const before = editable(d);
 
   if (input.campaign && input.campaign !== d.campaign && !(await Campaign.exists({ key: input.campaign }))) {
@@ -227,7 +234,13 @@ export async function updateDonation(id, input, actor) {
   const amount = material ? null : 'amount' in input ? input.amount ?? null : d.amount;
   if (!material && !(amount >= 1)) throw new HttpError(400, 'Enter an amount, or an in-kind item');
 
-  if ('receiptNo' in input && input.receiptNo != null && input.receiptNo !== d.receiptNo) {
+  if ('receiptNo' in input && input.receiptNo !== (d.receiptNo ?? null)) {
+    // Correcting a typo only: a receipt can't be removed, added before the cash is collected, or set to a
+    // number the counter hasn't issued yet (it would collide with a future receipt).
+    if (input.receiptNo == null) throw new HttpError(400, 'A receipt number cannot be removed; reject the donation instead');
+    if (!d.receiptNo) throw new HttpError(400, 'This donation has no receipt yet; it gets one when the cash is collected');
+    const counter = await Counter.findById('receipt');
+    if (input.receiptNo > (counter?.seq || 0)) throw new HttpError(400, `Receipt numbers above ${counter?.seq || 0} have not been issued yet`);
     if (await Donation.exists({ _id: { $ne: d._id }, receiptNo: input.receiptNo })) {
       throw new HttpError(409, `Receipt ${input.receiptNo} already belongs to another donation`);
     }

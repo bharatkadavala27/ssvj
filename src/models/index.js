@@ -87,7 +87,7 @@ const DonationSchema = new Schema(
     name: { type: Localized, required: true },
     initial: { type: Localized, required: true },
     photo: { type: String, default: null }, // bundled avatar key or uploaded image URL
-    village: { type: String, required: true, lowercase: true },
+    village: { type: String, required: true, lowercase: true, trim: true },
     amount: { type: Number, default: null, min: 0 }, // null for in-kind donations
     material: { type: Localized, default: null }, // in-kind description
     anon: { type: Boolean, default: false },
@@ -109,7 +109,7 @@ const DonationSchema = new Schema(
     approvedAt: { type: Date, default: null },
     rejectReason: { type: String, default: null },
   },
-  { timestamps: true, toJSON: jsonOptions },
+  { timestamps: true, toJSON: jsonOptions, optimisticConcurrency: true },
 );
 DonationSchema.index({ campaign: 1, createdAt: -1 });
 DonationSchema.index({ village: 1 });
@@ -419,6 +419,7 @@ const ActivityLogSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false }, toJSON: jsonOptions },
 );
 ActivityLogSchema.index({ createdAt: -1 });
+ActivityLogSchema.index({ 'actor.id': 1 });
 
 /** Atomic sequences (receipt numbers). */
 const CounterSchema = new Schema({ _id: String, seq: { type: Number, default: 0 } }, { versionKey: false });

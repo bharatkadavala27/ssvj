@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { Member, RELATIONS, Village } from '../models/index.js';
-import { placeExists } from './places.js';
+import { Member, RELATIONS } from '../models/index.js';
+import { placeExists, placeKeysMatching } from './places.js';
 import { HttpError } from '../middleware/errors.js';
 import { normalizePhone } from './auth.js';
 import { initialOf } from './format.js';
@@ -25,7 +25,12 @@ const optionalPhone = z
 
 const birthYear = z.preprocess(
   (v) => (v === '' || v == null ? null : Number(v)),
-  z.number().int().min(1900).max(new Date().getFullYear()).nullable(),
+  z
+    .number()
+    .int()
+    .min(1900)
+    .nullable()
+    .refine((v) => v == null || v <= new Date().getFullYear(), { message: 'Birth year cannot be in the future' }),
 );
 
 const personInput = z.object({
@@ -47,7 +52,8 @@ export const memberInput = z.object({
   birthYear,
   education: text(80),
   occupation: text(80),
-  family: z.array(personInput).max(30).default([]),
+  // Length is checked before each person is parsed, so a huge array is rejected cheaply.
+  family: z.array(z.unknown()).max(30).pipe(z.array(personInput)).default([]),
 });
 
 export async function checkMemberVillage(key) {
@@ -83,23 +89,45 @@ export const memberListQuery = z.object({
   skip: z.coerce.number().int().min(0).default(0),
 });
 
-/** Filter by village and a search over the head's and family members' names (and village names). */
-export async function memberFilter({ village, q }) {
+/**
+ * Filter by place and a search. The public list searches only what it shows (the head's name, where
+ * they live now, place names); `staff` (the dashboard) also searches family members' names and phones.
+ */
+export async function memberFilter({ village, q }, { staff = false } = {}) {
   const f = {};
   if (village) f.village = village;
   if (q?.trim()) {
     const re = new RegExp(escapeRe(q.trim()), 'i');
-    const villageKeys = (await Village.find({ $or: [{ 'name.gu': re }, { 'name.en': re }] }, { key: 1 })).map((v) => v.key);
-    f.$or = [{ name: re }, { 'family.name': re }, { currentPlace: re }, { village: { $in: villageKeys } }];
-    if (/^\d{3,}$/.test(q.trim())) f.$or.push({ phone: re }, { 'family.phone': re });
+    f.$or = [{ name: re }, { currentPlace: re }, { village: { $in: await placeKeysMatching(re) } }];
+    if (staff) {
+      f.$or.push({ 'family.name': re });
+      if (/^\d{3,}$/.test(q.trim())) f.$or.push({ phone: re }, { 'family.phone': re });
+    }
   }
   return f;
+}
+
+/**
+ * The user's own registration. A record the admin entered with the same mobile and no account yet is
+ * linked to this account; concurrent calls (or a duplicate) fall back to reading by account.
+ */
+export async function findOrLinkMember(user) {
+  if (!user?.id) return null;
+  const mine = await Member.findOne({ userId: user.id });
+  if (mine || !user.phone) return mine;
+  try {
+    const linked = await Member.findOneAndUpdate({ userId: null, phone: user.phone }, { userId: user.id }, { new: true });
+    if (linked) return linked;
+  } catch (err) {
+    if (err?.code !== 11000) throw err;
+  }
+  return Member.findOne({ userId: user.id });
 }
 
 /** Families and people per village, largest first, plus the totals. */
 export async function memberSummary() {
   const rows = await Member.aggregate([
-    { $group: { _id: '$village', families: { $sum: 1 }, people: { $sum: { $add: [1, { $size: '$family' }] } } } },
+    { $group: { _id: '$village', families: { $sum: 1 }, people: { $sum: { $add: [1, { $size: { $ifNull: ['$family', []] } }] } } } },
     { $sort: { people: -1, _id: 1 } },
   ]);
   const villages = rows.map((r) => ({ village: r._id, families: r.families, people: r.people }));

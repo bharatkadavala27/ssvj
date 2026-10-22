@@ -26,7 +26,9 @@ export function createApp() {
   );
   // Compression would buffer the SSE stream, so skip it there.
   app.use(compression({ filter: (req, res) => req.path !== '/api/live' && compression.filter(req, res) }));
-  app.use(express.json({ limit: '1mb' })); // a wedding year's donor list can run to hundreds of rows
+  // A wedding year's donor list can run to hundreds of rows, so the dashboard API takes larger bodies.
+  app.use('/api/admin', express.json({ limit: '1mb' }));
+  app.use(express.json({ limit: '100kb' }));
   // Successful uptime pings (every 5 minutes) would only add noise to the log.
   app.use(morgan(env.isProd ? 'combined' : 'dev', { skip: (req, res) => req.originalUrl.startsWith('/api/health') && res.statusCode < 400 }));
 

@@ -35,7 +35,7 @@ import { eventView } from '../lib/format.js';
 import { broadcast } from '../lib/live.js';
 import { normalizePhone } from '../lib/auth.js';
 import { checkMemberVillage, memberFilter, memberInput, memberListQuery, memberSummary, memberView } from '../lib/members.js';
-import { placeExists, placeList, placesExist } from '../lib/places.js';
+import { clearPlaceCache, placeExists, placeList, placesExist } from '../lib/places.js';
 import uploadsRouter from './uploads.js';
 
 /** Admin dashboard API. Every route requires an admin account (or the server ADMIN_KEY). */
@@ -51,7 +51,14 @@ const refresh = () => broadcast('refresh', { at: Date.now() });
  * `prepare(body)` returns the body to store (async) · `check(record)` may throw an HttpError; on update it
  * sees the stored record merged with the changes · `after(doc)` runs after a save · `beforeDelete(doc)` may throw.
  */
-function crud(path, Model, { sort = { order: 1 }, view = (d) => d, prepare, check, after, beforeDelete } = {}) {
+const PLACE_PATHS = ['villages', 'talukas', 'districts'];
+
+/**
+ * `inUse(doc)` may throw when other records refer to this one by key: it guards deletes and key changes
+ * (other records store the key, so renaming it would leave them pointing at nothing).
+ */
+function crud(path, Model, { sort = { order: 1 }, view = (d) => d, prepare, check, after, beforeDelete, inUse } = {}) {
+  const changed = () => PLACE_PATHS.includes(path) && clearPlaceCache();
   router.get(`/${path}`, ah(async (req, res) => res.json((await Model.find().sort(sort)).map(view))));
   router.post(
     `/${path}`,
@@ -60,6 +67,7 @@ function crud(path, Model, { sort = { order: 1 }, view = (d) => d, prepare, chec
       check?.(body || {});
       const doc = await Model.create(body);
       await after?.(doc);
+      changed();
       refresh();
       await logActivity({ actor: req.user, action: 'create', entity: path, entityId: doc._id, label: labelOf(doc) });
       res.status(201).json(view(doc));
@@ -72,9 +80,17 @@ function crud(path, Model, { sort = { order: 1 }, view = (d) => d, prepare, chec
       const existing = await Model.findById(req.params.id).lean();
       if (!existing) throw new HttpError(404, 'Not found');
       check?.({ ...existing, ...body });
+      if (inUse && 'key' in (body || {}) && String(body.key).trim().toLowerCase() !== existing.key) {
+        try {
+          await inUse(existing);
+        } catch (err) {
+          throw new HttpError(400, `The key can't be changed: ${err.message}`);
+        }
+      }
       const doc = await Model.findByIdAndUpdate(req.params.id, body, { new: true, runValidators: true });
       if (!doc) throw new HttpError(404, 'Not found');
       await after?.(doc);
+      changed();
       refresh();
       const changes = diff(existing, doc.toObject(), Object.keys(body || {}));
       if (changes.length) await logActivity({ actor: req.user, action: 'update', entity: path, entityId: doc._id, label: labelOf(doc), changes });
@@ -86,9 +102,10 @@ function crud(path, Model, { sort = { order: 1 }, view = (d) => d, prepare, chec
     ah(async (req, res) => {
       const existing = await Model.findById(req.params.id);
       if (!existing) throw new HttpError(404, 'Not found');
-      await beforeDelete?.(existing);
+      await (beforeDelete || inUse)?.(existing);
       const doc = await Model.findByIdAndDelete(req.params.id);
       if (!doc) throw new HttpError(404, 'Not found');
+      changed();
       refresh();
       await logActivity({ actor: req.user, action: 'delete', entity: path, entityId: doc._id, label: labelOf(doc), snapshot: doc });
       res.status(204).end();
@@ -125,17 +142,38 @@ async function syncDistrictVillages(district) {
   if (keys.length) await Village.updateMany({ talukaKey: { $in: keys } }, { district: district.name });
 }
 
+/** Donations, families, trustees and sevak assignments that use a place key. */
+async function placeRefs(key) {
+  const [donations, members, trustees, users] = await Promise.all([
+    Donation.countDocuments({ village: key }),
+    Member.countDocuments({ village: key }),
+    Trustee.countDocuments({ village: key }),
+    User.countDocuments({ villages: key }),
+  ]);
+  const parts = [[donations, 'donation'], [members, 'registered family'], [trustees, 'trustee'], [users, 'sevak assignment']]
+    .filter(([n]) => n)
+    .map(([n, what]) => `${n} ${what}${n === 1 ? '' : 's'}`);
+  if (parts.length) throw new HttpError(400, `${parts.join(', ')} use this place`);
+}
+
 async function districtInUse(district) {
   const n = await Taluka.countDocuments({ district: district.key });
   if (n) throw new HttpError(400, `${n} taluka(s) belong to this district; move or delete them first`);
+  await placeRefs(`district:${district.key}`);
 }
 async function talukaInUse(taluka) {
   const n = await Village.countDocuments({ talukaKey: taluka.key });
   if (n) throw new HttpError(400, `${n} village(s) are linked to this taluka; relink them first`);
+  await placeRefs(`taluka:${taluka.key}`);
+}
+const villageInUse = (village) => placeRefs(village.key);
+async function campaignInUse(campaign) {
+  const n = await Donation.countDocuments({ campaign: campaign.key });
+  if (n) throw new HttpError(400, `${n} donation(s) belong to this campaign; make it inactive instead`);
 }
 
-crud('districts', District, { sort: { order: 1, 'name.en': 1 }, after: syncDistrictVillages, beforeDelete: districtInUse });
-crud('talukas', Taluka, { sort: { district: 1, order: 1, 'name.en': 1 }, prepare: checkTalukaDistrict, after: syncTalukaVillages, beforeDelete: talukaInUse });
+crud('districts', District, { sort: { order: 1, 'name.en': 1 }, after: syncDistrictVillages, inUse: districtInUse });
+crud('talukas', Taluka, { sort: { district: 1, order: 1, 'name.en': 1 }, prepare: checkTalukaDistrict, after: syncTalukaVillages, inUse: talukaInUse });
 
 /** Required fields depend on the slide type; links must be web, phone or email links. */
 function checkBanner(b) {
@@ -172,8 +210,8 @@ function checkSponsor(s) {
   if ((s.buttonText?.gu || s.buttonText?.en) && !s.buttonLink) throw new HttpError(400, 'The extra button needs a link');
 }
 
-crud('campaigns', Campaign);
-crud('villages', Village, { prepare: prepareVillage });
+crud('campaigns', Campaign, { inUse: campaignInUse });
+crud('villages', Village, { prepare: prepareVillage, inUse: villageInUse });
 crud('sponsors', Sponsor, { check: checkSponsor });
 crud('banners', Banner, { check: checkBanner });
 crud('gallery', Gallery);
@@ -201,13 +239,28 @@ async function prepareActivity(body) {
   return body;
 }
 
-/** Drops empty rows the dashboard's list editors may send. */
+/** "₹5,100.00" → 5100; anything without digits → null. */
+const amountOf = (v) => {
+  if (typeof v === 'number') return v;
+  const t = String(v ?? '');
+  if (!/\d/.test(t)) return null;
+  const n = Number(t.replace(/[^\d.]/g, ''));
+  return Number.isNaN(n) ? null : n;
+};
+
+/** Drops empty rows the dashboard's list editors may send, and reads typed amounts as numbers. */
 function prepareWedding(body) {
   const rows = (list, key) => (Array.isArray(list) ? list.filter((r) => String(r?.[key] ?? '').trim()) : list);
-  return { ...body, donors: rows(body.donors, 'name'), expenses: rows(body.expenses, 'item'), facts: rows(body.facts, 'label') };
+  const withAmounts = (list) => (Array.isArray(list) ? list.map((r) => ({ ...r, amount: amountOf(r.amount) })) : list);
+  return {
+    ...body,
+    donors: withAmounts(rows(body.donors, 'name')),
+    expenses: withAmounts(rows(body.expenses, 'item')),
+    facts: rows(body.facts, 'label'),
+  };
 }
 
-crud('quick-links', QuickLink, { check: checkQuickLink, beforeDelete: quickLinkInUse });
+crud('quick-links', QuickLink, { check: checkQuickLink, inUse: quickLinkInUse });
 crud('activities', Activity, { sort: { section: 1, order: 1, date: -1 }, prepare: prepareActivity });
 crud('weddings', WeddingYear, { sort: { order: 1, year: -1 }, prepare: prepareWedding });
 
@@ -223,6 +276,7 @@ async function prepareTrustee(body) {
     throw new HttpError(400, 'Choose a designation');
   }
   if (body.phone && String(body.phone).replace(/\D/g, '').length < 10) throw new HttpError(400, 'phone must have at least 10 digits');
+  if (body.phone) body = { ...body, phone: normalizePhone(body.phone) || String(body.phone).trim() }; // "+91 98765-43210" → 9876543210
   if (body.village && !(await placeExists(String(body.village).toLowerCase()))) throw new HttpError(400, 'Unknown village');
   return body;
 }
@@ -249,7 +303,7 @@ router.get(
   '/members',
   ah(async (req, res) => {
     const q = memberListQuery.parse(req.query);
-    const filter = await memberFilter(q);
+    const filter = await memberFilter(q, { staff: true });
     const [items, total] = await Promise.all([
       Member.find(filter).sort({ village: 1, name: 1 }).skip(q.skip).limit(q.limit),
       Member.countDocuments(filter),
@@ -331,11 +385,16 @@ router.get(
 router.post(
   '/users',
   ah(async (req, res) => {
-    const input = userInput.parse(req.body);
+    // An existing account (someone who already logged in) is updated in place, and keeps whatever the
+    // request doesn't set; defaults apply only to a new account.
+    const phone = phoneField.parse(req.body?.phone);
+    const existing = await User.findOne({ phone }).lean();
+    const input = existing ? userInput.partial().parse(req.body) : userInput.parse(req.body);
     await checkVillages(input.villages);
-    // An existing public account (someone who already logged in) is upgraded in place.
-    const existing = await User.findOne({ phone: input.phone }).lean();
-    const user = await User.findOneAndUpdate({ phone: input.phone }, input, { new: true, upsert: true, runValidators: true });
+    if (existing && req.user.id && String(req.user.id) === String(existing._id) && input.role && input.role !== 'admin') {
+      throw new HttpError(400, 'You cannot remove your own admin role');
+    }
+    const user = await User.findOneAndUpdate({ phone }, input, { new: true, upsert: true, runValidators: true });
     await logActivity({
       actor: req.user,
       action: existing ? 'update' : 'create',
@@ -391,10 +450,13 @@ function donationFilter(q) {
     if (q.to) f.createdAt.$lte = new Date(`${q.to}T23:59:59.999+05:30`);
   }
   if (q.q) {
-    const re = new RegExp(q.q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-    const or = [{ 'name.gu': re }, { 'name.en': re }, { phone: re }];
-    if (/^\d+$/.test(q.q)) or.push({ receiptNo: Number(q.q) });
-    f.$or = or;
+    const text = q.q.trim().replace(/^#/, '');
+    if (/^\d{1,6}$/.test(text)) {
+      f.receiptNo = Number(text); // a short number is a receipt number (a mobile search needs 7+ digits)
+    } else {
+      const re = new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      f.$or = [{ 'name.gu': re }, { 'name.en': re }, { phone: re }];
+    }
   }
   return f;
 }
@@ -428,7 +490,7 @@ router.post(
     const input = z
       .object({
         campaign: z.string(),
-        village: z.string(),
+        village: z.string().trim().toLowerCase().min(1).max(80),
         amount: z.coerce.number().int().min(1).optional(),
         material: z.string().trim().min(1).max(120).optional(),
         name: z.string().trim().max(80).optional(),
@@ -459,38 +521,42 @@ router.patch(
   }),
 );
 
+// `.optional()` outermost: a field left out of the request stays out (and is not changed); null or '' clears it.
 const optionalText = (max) =>
   z
     .string()
     .trim()
     .max(max)
-    .nullish()
-    .transform((v) => v || null);
-const nullableNumber = z.preprocess((v) => (v === '' || v == null ? null : Number(v)), z.number().int().min(1).nullable());
+    .nullable()
+    .transform((v) => v || null)
+    .optional();
+const nullableNumber = (max) => z.preprocess((v) => (v === '' || v === null ? null : v === undefined ? undefined : Number(v)), z.number().int().min(1).max(max).nullable().optional());
 
 /** Admin edit of a donation's details (status changes go through PATCH). */
 const donationEdit = z.object({
   campaign: z.string().min(1).optional(),
-  village: z.string().min(1).max(80).optional(),
+  village: z.string().trim().toLowerCase().min(1).max(80).optional(),
   name: z.string().trim().max(80).optional(),
   nameEn: optionalText(80),
-  amount: nullableNumber.optional(),
+  amount: nullableNumber(100_000_000),
   material: optionalText(120),
   anon: z.boolean().optional(),
   phone: z
     .string()
-    .nullish()
+    .nullable()
     .transform((v, ctx) => {
       if (!v || !v.trim()) return null;
       const p = normalizePhone(v);
       if (!p) ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Enter a valid 10-digit mobile number' });
       return p;
-    }),
+    })
+    .optional(),
   details: optionalText(200),
   through: optionalText(80),
   business: optionalText(120),
   currentPlace: optionalText(60),
-  receiptNo: nullableNumber.optional(),
+  receiptNo: nullableNumber(10_000_000),
+  updatedAt: z.string().datetime({ offset: true }).optional(), // as loaded; a newer record means someone else changed it
 });
 
 router.put(
@@ -627,12 +693,12 @@ function nextIST(t, unit) {
 }
 
 const SIZE_BANDS = [
-  [1, 500, '≤ ₹500'],
-  [501, 1100, '₹501–1,100'],
-  [1101, 5000, '₹1,101–5,000'],
-  [5001, 11000, '₹5,001–11,000'],
-  [11001, 51000, '₹11,001–51,000'],
-  [51001, Infinity, '₹51,001+'],
+  [1, 500, '≤ ₹500', '≤500'],
+  [501, 1100, '₹501–1,100', '501–1.1K'],
+  [1101, 5000, '₹1,101–5,000', '1.1K–5K'],
+  [5001, 11000, '₹5,001–11,000', '5K–11K'],
+  [11001, 51000, '₹11,001–51,000', '11K–51K'],
+  [51001, Infinity, '₹51,001+', '51K+'],
 ];
 
 const donorKey = (d) => (d.anon ? `anon:${d._id}` : `${d.village}|${d.name?.gu}`);
@@ -676,15 +742,18 @@ router.get(
     const now = Date.now();
     const first = q.from ? null : await Donation.findOne(base).sort({ createdAt: 1 }).select('createdAt').lean();
     const start = q.from ? new Date(`${q.from}T00:00:00+05:30`).getTime() : first ? first.createdAt.getTime() : now - 30 * DAY;
-    const end = q.to ? Math.min(now, new Date(`${q.to}T23:59:59.999+05:30`).getTime()) : now;
-    const span = Math.max(36e5, end - start);
+    const periodEnd = q.to ? new Date(`${q.to}T23:59:59.999+05:30`).getTime() : now;
+    const end = Math.min(now, periodEnd);
+    const span = Math.max(36e5, periodEnd - start); // the whole requested period, e.g. all of today
+    const prevStart = start - span;
+    const prevEnd = prevStart + (end - start); // the previous period up to the same point (e.g. yesterday until this hour)
     const days = span / DAY;
     const unit = days <= 2 ? 'hour' : days <= 92 ? 'day' : days <= 550 ? 'week' : 'month';
     const fields = 'campaign name village amount material anon status source collectedBy receiptNo createdAt';
     const sumAmount = { $sum: { $ifNull: ['$amount', 0] } };
     const [docs, prevDocs, campaigns, pending, pledgedOpen, community, sevaks, upcomingEvents] = await Promise.all([
       Donation.find({ ...base, createdAt: { $gte: new Date(start), $lte: new Date(end) } }).select(fields).sort({ createdAt: -1 }).lean(),
-      q.from ? Donation.find({ ...base, createdAt: { $gte: new Date(start - span), $lt: new Date(start) } }).select('name village amount material anon status').lean() : null,
+      q.from ? Donation.find({ ...base, createdAt: { $gte: new Date(prevStart), $lte: new Date(prevEnd) } }).select('name village amount material anon status').lean() : null,
       Campaign.find().sort({ order: 1 }).lean(),
       Donation.aggregate([{ $match: { ...base, status: 'collected' } }, { $group: { _id: null, count: { $sum: 1 }, amount: sumAmount } }]),
       Donation.aggregate([{ $match: { ...base, status: 'pledged' } }, { $group: { _id: null, count: { $sum: 1 }, amount: sumAmount } }]),
@@ -722,9 +791,9 @@ router.get(
     }
     const bySource = groupBy(live, (d) => (d.source === 'seed' ? 'admin' : d.source), (d) => ({ source: d.source === 'seed' ? 'admin' : d.source, count: 0, amount: 0 }));
     const cash = live.filter((d) => !d.material && d.amount > 0);
-    const sizes = SIZE_BANDS.map(([lo, hi, label]) => {
+    const sizes = SIZE_BANDS.map(([lo, hi, label, short]) => {
       const inBand = cash.filter((d) => d.amount >= lo && d.amount <= hi);
-      return { label, count: inBand.length, amount: inBand.reduce((n, d) => n + d.amount, 0) };
+      return { label, short, count: inBand.length, amount: inBand.reduce((n, d) => n + d.amount, 0) };
     });
     const topDonors = groupBy(cash.filter((d) => !d.anon), donorKey, (d) => ({ name: d.name, village: d.village, count: 0, amount: 0 })).slice(0, 8);
 
@@ -830,14 +899,17 @@ router.patch(
   '/settings',
   ah(async (req, res) => {
     const { nextReceiptNo, ...fields } = req.body || {};
+    let n = null;
+    if (nextReceiptNo != null) {
+      // Continue numbering from the paper receipt book, e.g. 557 after slip 556. Checked before anything is saved.
+      n = z.coerce.number().int().min(1).parse(nextReceiptNo);
+      const last = await Donation.findOne({ receiptNo: { $ne: null } }).sort({ receiptNo: -1 });
+      if (last && n <= last.receiptNo) throw new HttpError(400, `Receipt ${last.receiptNo} was already issued; choose a higher number`);
+    }
     const before = (await Settings.findById('org').lean()) || {};
     const settings = await Settings.findByIdAndUpdate('org', fields, { new: true, upsert: true, runValidators: true });
     const changes = diff(before, settings.toObject(), Object.keys(fields));
-    if (nextReceiptNo != null) {
-      // Continue numbering from the paper receipt book, e.g. 557 after slip 556.
-      const n = z.coerce.number().int().min(1).parse(nextReceiptNo);
-      const last = await Donation.findOne({ receiptNo: { $ne: null } }).sort({ receiptNo: -1 });
-      if (last && n <= last.receiptNo) throw new HttpError(400, `Receipt ${last.receiptNo} was already issued; choose a higher number`);
+    if (n != null) {
       const counter = await Counter.findById('receipt');
       await Counter.findByIdAndUpdate('receipt', { seq: n - 1 }, { upsert: true });
       changes.push({ field: 'nextReceiptNo', from: (counter?.seq || 0) + 1, to: n });
