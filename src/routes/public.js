@@ -16,6 +16,7 @@ import {
   Settings,
   Sponsor,
   Trustee,
+  TrusteeOrg,
   TrusteeRole,
   User,
   WeddingYear,
@@ -78,7 +79,7 @@ router.get(
   '/home',
   ah(async (req, res) => {
     const campaigns = await Campaign.find({ active: true }).sort({ order: 1 });
-    const [recentLists, top, banners, sponsors, events, notifications, villages, settings, gallery, reports, trusteeRoles, trustees, quickLinks] = await Promise.all([
+    const [recentLists, top, banners, sponsors, events, notifications, villages, settings, gallery, reports, trusteeOrgs, trusteeRoles, trustees, quickLinks] = await Promise.all([
       Promise.all(
         campaigns.map((c) => Donation.find({ ...visible, campaign: c.key }).sort({ createdAt: -1 }).limit(RECENT_PER_CAMPAIGN)),
       ),
@@ -91,6 +92,7 @@ router.get(
       Settings.findById('org'),
       Gallery.find({ published: true }).sort({ order: 1 }),
       Report.find({ published: true }).sort({ year: -1, createdAt: -1 }),
+      TrusteeOrg.find({ active: true }).sort({ order: 1, createdAt: 1 }),
       TrusteeRole.find().sort({ order: 1 }),
       Trustee.find({ active: true }).sort({ order: 1, createdAt: 1 }),
       QuickLink.find({ active: true }).sort({ order: 1 }),
@@ -111,6 +113,7 @@ router.get(
       settings,
       gallery,
       reports,
+      trusteeOrgs,
       trusteeRoles,
       trustees,
       quickLinks,

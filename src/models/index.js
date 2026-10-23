@@ -333,6 +333,17 @@ const WeddingYearSchema = new Schema(
   { timestamps: true, toJSON: jsonOptions },
 );
 
+const TrusteeOrgSchema = new Schema(
+  {
+    key: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    name: { type: Localized, required: true },
+    regNo: { type: Localized, default: null },
+    order: { type: Number, default: 0 },
+    active: { type: Boolean, default: true },
+  },
+  { timestamps: true, toJSON: jsonOptions },
+);
+
 /** Trustee board designation (પ્રમુખ, મહામંત્રી, …), managed by the admin; `order` sets the order on the trustees screen. */
 const TrusteeRoleSchema = new Schema(
   {
@@ -347,6 +358,7 @@ const TrusteeSchema = new Schema(
   {
     name: { type: Localized, required: true },
     role: { type: String, required: true, lowercase: true, index: true }, // TrusteeRole key
+    org: { type: String, default: 'ssvj', lowercase: true, index: true }, // TrusteeOrg key
     phone: { type: String, default: null, trim: true },
     photo: { type: String, default: null },
     village: { type: String, default: null, lowercase: true }, // Village key
@@ -463,6 +475,7 @@ export const Report = model('Report', ReportSchema);
 export const QuickLink = model('QuickLink', QuickLinkSchema);
 export const Activity = model('Activity', ActivitySchema);
 export const WeddingYear = model('WeddingYear', WeddingYearSchema);
+export const TrusteeOrg = model('TrusteeOrg', TrusteeOrgSchema);
 export const TrusteeRole = model('TrusteeRole', TrusteeRoleSchema);
 export const Trustee = model('Trustee', TrusteeSchema);
 export const Member = model('Member', MemberSchema);

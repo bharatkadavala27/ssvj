@@ -22,6 +22,7 @@ import {
   Sponsor,
   Taluka,
   Trustee,
+  TrusteeOrg,
   TrusteeRole,
   User,
   Village,
@@ -271,15 +272,38 @@ async function trusteeRoleInUse(role) {
   if (n) throw new HttpError(400, `${n} trustee(s) have this designation; change or delete them first`);
 }
 
+async function trusteeOrgInUse(org) {
+  const n = await Trustee.countDocuments({ org: org.key });
+  if (n) throw new HttpError(400, `${n} trustee(s) belong to this organization; change or delete them first`);
+}
+
 async function prepareTrustee(body) {
   if ('role' in body && !(await TrusteeRole.exists({ key: String(body.role || '').toLowerCase() }))) {
     throw new HttpError(400, 'Choose a designation');
+  }
+  if ('org' in body && body.org && !(await TrusteeOrg.exists({ key: String(body.org || '').toLowerCase() }))) {
+    throw new HttpError(400, 'Choose an organization');
   }
   if (body.phone && String(body.phone).replace(/\D/g, '').length < 10) throw new HttpError(400, 'phone must have at least 10 digits');
   if (body.phone) body = { ...body, phone: normalizePhone(body.phone) || String(body.phone).trim() }; // "+91 98765-43210" → 9876543210
   if (body.village && !(await placeExists(String(body.village).toLowerCase()))) throw new HttpError(400, 'Unknown village');
   return body;
 }
+
+/** Changing an organization's key moves its trustees along. */
+router.patch(
+  '/trustee-orgs/:id',
+  ah(async (req, res, next) => {
+    const key = String(req.body?.key || '').trim().toLowerCase();
+    const old = key && mongoose.isValidObjectId(req.params.id) && (await TrusteeOrg.findById(req.params.id));
+    if (old && old.key !== key) {
+      if (await TrusteeOrg.exists({ key })) throw new HttpError(409, 'Another organization already uses this key');
+      await Trustee.updateMany({ org: old.key }, { org: key });
+    }
+    next();
+  }),
+);
+crud('trustee-orgs', TrusteeOrg, { sort: { order: 1, createdAt: 1 }, beforeDelete: trusteeOrgInUse });
 
 /** Changing a designation's key moves its trustees along (runs before the generic update below). */
 router.patch(
