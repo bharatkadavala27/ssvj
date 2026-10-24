@@ -40,5 +40,8 @@ services:
       # Testing phase: the app shows and fills in the login code. Set to false (or remove) before launch.
       - key: SHOW_OTP
         value: "true"
+      # Google Play review login "<10-digit mobile>:<6-digit code>" (no SMS is sent for that number).
+      - key: REVIEW_LOGIN
+        sync: false
       - key: FAST2SMS_API_KEY
         sync: false

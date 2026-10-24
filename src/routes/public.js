@@ -28,7 +28,7 @@ import { campaignStats, donationView, receiptData, recordDonation, topDonors } f
 import { eventView } from '../lib/format.js';
 import { subscribe } from '../lib/live.js';
 import { cloudinaryReady } from '../lib/cloudinary.js';
-import { placeKeysMatching, placeList } from '../lib/places.js';
+import { placeData, placeKeysMatching, placeList } from '../lib/places.js';
 import { logActivity } from '../lib/activity.js';
 import { checkMemberVillage, findOrLinkMember, memberFilter, memberInput, memberListQuery, memberPublicView, memberSummary, memberView } from '../lib/members.js';
 
@@ -36,7 +36,13 @@ const router = Router();
 const visible = { status: { $ne: 'rejected' } };
 const RECENT_PER_CAMPAIGN = 20;
 
-const campaignView = (c) => ({ ...campaignStats(c), label: c.label, poster: c.poster, gauge: c.gauge });
+const campaignView = (c) => ({ ...campaignStats(c), label: c.label, poster: c.poster, gauge: c.gauge, countdownTo: c.countdownTo || null });
+
+/** Display names and picker sub-lines for every place, from the cached place list. */
+const placeMaps = (list) => ({
+  villages: Object.fromEntries(list.map((v) => [v.key, v.name])),
+  villageTalukas: Object.fromEntries(list.filter((v) => v.sub).map((v) => [v.key, v.sub])),
+});
 
 async function upcomingEvents() {
   const since = new Date(Date.now() - 24 * 3600 * 1000);
@@ -74,6 +80,31 @@ router.get('/health', (req, res) => {
   });
 });
 
+/** Place keys the home payload refers to (recent donations, top donors, donor slides, trustees). */
+function usedPlaces(campaigns, recentLists, top, banners, trustees) {
+  const keys = new Set();
+  recentLists.flat().forEach((d) => keys.add(d.village));
+  top.forEach((d) => keys.add(d.village));
+  banners.forEach((b) => b.donor?.village && keys.add(b.donor.village));
+  trustees.forEach((t) => t.village && keys.add(t.village));
+  return keys;
+}
+
+function placesFor(keys, list) {
+  const maps = placeMaps(keys ? list.filter((p) => keys.has(p.key)) : list);
+  return maps;
+}
+
+/** Every place name for the app's pickers and lists; the app keeps it until `version` changes. */
+router.get(
+  '/places',
+  ah(async (req, res) => {
+    const { list, version } = await placeData();
+    res.set('Cache-Control', 'public, max-age=300');
+    res.json({ version, ...placeMaps(list) });
+  }),
+);
+
 /** Everything the home screen needs in one request. */
 router.get(
   '/home',
@@ -106,10 +137,11 @@ router.get(
       sponsors,
       events,
       notifications,
-      // Names of every place a donor can be from: villages, then talukas ("taluka:<key>") and districts ("district:<key>").
-      villages: Object.fromEntries(villages.map((v) => [v.key, v.name])),
-      // The line under each name in pickers (a village's taluka, a taluka's district), to tell same names apart.
-      villageTalukas: Object.fromEntries(villages.filter((v) => v.sub).map((v) => [v.key, v.sub])),
+      // Place names. With ?lite=1 (current app versions) only the places this payload mentions; the full
+      // list (~120 KB, needed by the pickers) comes from GET /places and is cached by the app until
+      // `placesVersion` changes. Older app versions without ?lite get the full list as before.
+      ...placesFor(req.query.lite ? usedPlaces(campaigns, recentLists, top, banners, trustees) : null, villages),
+      placesVersion: (await placeData()).version,
       settings,
       gallery,
       reports,
@@ -192,6 +224,17 @@ router.post(
 
 router.get('/settings', ah(async (req, res) => res.json(await Settings.findById('org'))));
 
+/** Newest Android app (Settings → App update), for "Check for updates" in Profile → About. */
+router.get(
+  '/app-version',
+  ah(async (req, res) => {
+    const s = (await Settings.findById('org', { appUpdate: 1, webUrl: 1 }).lean()) || {};
+    const u = s.appUpdate || {};
+    res.set('Cache-Control', 'no-store');
+    res.json({ version: u.version || null, url: u.url || null, notes: u.notes || null, webUrl: s.webUrl || null });
+  }),
+);
+
 /** A donor's own donation status and receipt, authorised by the token returned when they pledged. */
 router.get(
   '/donations/:id/receipt',
@@ -245,8 +288,7 @@ router.get('/sponsors', ah(async (req, res) => res.json(await Sponsor.find({ act
 router.get(
   '/villages',
   ah(async (req, res) => {
-    const villages = await placeList();
-    res.json(Object.fromEntries(villages.map((v) => [v.key, v.name])));
+    res.json(placeMaps(await placeList()).villages);
   }),
 );
 

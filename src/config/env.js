@@ -22,6 +22,9 @@ export const env = {
   isProd: process.env.NODE_ENV === 'production',
   // Testing mode: return the login code to the app (only while SMS_PROVIDER=console, i.e. no SMS set up).
   showOtp: process.env.SHOW_OTP === 'true',
+  // Fixed login for Google Play's app reviewers, "<mobile>:<6-digit code>" (no SMS is sent). Keep that
+  // account a plain public user; leave empty when not needed.
+  reviewLogin: process.env.REVIEW_LOGIN || '',
   sms: {
     provider: process.env.SMS_PROVIDER || 'console',
     fast2smsKey: process.env.FAST2SMS_API_KEY || '',

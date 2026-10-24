@@ -32,7 +32,14 @@ const editable = (d) => ({
   business: d.business ?? null,
   currentPlace: d.currentPlace ?? null,
   receiptNo: d.receiptNo ?? null,
+  payMode: d.payMode ?? null,
+  payRef: d.payRef ?? null,
+  dueDate: d.dueDate ? dueDay(d.dueDate) : null,
 });
+
+/** "2026-11-24" (a date input's value) ⇄ noon that day in India, so the day is the same in every time zone. */
+export const dueDateOf = (day) => (day ? new Date(`${day}T12:00:00+05:30`) : null);
+const dueDay = (date) => new Date(date).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
 
 /**
  * Donors ranked by total given (named, cash donations only). Only approved donations count, so an
@@ -66,8 +73,10 @@ export function donationView(d) {
   delete o.phone;
   delete o.receiptToken;
   delete o.userId;
+  delete o.payRef;
   o.collectedBy = o.collectedBy?.name ? { name: o.collectedBy.name } : null;
   o.approvedBy = o.approvedBy?.name ? { name: o.approvedBy.name } : null;
+  o.pledgedBy = o.pledgedBy?.name ? { name: o.pledgedBy.name } : null;
   return o;
 }
 
@@ -75,7 +84,9 @@ export function donationView(d) {
 export function donationStaffView(d) {
   const o = donationView(d);
   o.phone = d.phone ?? null;
+  o.payRef = d.payRef ?? null;
   o.collectedBy = d.collectedBy?.name ? { id: d.collectedBy.id && String(d.collectedBy.id), name: d.collectedBy.name } : null;
+  o.pledgedBy = d.pledgedBy?.name ? { id: d.pledgedBy.id && String(d.pledgedBy.id), name: d.pledgedBy.name } : null;
   return o;
 }
 
@@ -105,8 +116,8 @@ async function adjustTotals(donation, sign) {
 
 /**
  * Records a donation and updates the campaign totals.
- *  status 'pledged'   — promised in the app (no receipt yet)
- *  status 'collected' — cash taken by a sevak: receipt number issued now
+ *  status 'pledged'   — promised in the app, or written down by a sevak to be paid later (no receipt yet)
+ *  status 'collected' — money taken by a sevak: receipt number issued now (input.payMode: cash, upi, …)
  *  status 'approved'  — entered directly by an admin
  */
 export async function recordDonation(input, { source = 'app', status = 'pledged', actor = null, userId = null } = {}) {
@@ -119,6 +130,7 @@ export async function recordDonation(input, { source = 'app', status = 'pledged'
   const initial = anon ? ANON_INITIAL : { gu: initialOf(name.gu), en: initialOf(name.en).toUpperCase() };
   const withReceipt = status === 'collected' || status === 'approved';
   const now = new Date();
+  const pledgeByStaff = status === 'pledged' && source !== 'app';
 
   const donation = await Donation.create({
     campaign: campaign.key,
@@ -142,6 +154,10 @@ export async function recordDonation(input, { source = 'app', status = 'pledged'
     collectedAt: withReceipt ? now : null,
     approvedBy: status === 'approved' ? staffRef(actor) : null,
     approvedAt: status === 'approved' ? now : null,
+    payMode: withReceipt && !input.material ? input.payMode || null : null,
+    payRef: withReceipt && !input.material ? input.payRef || null : null,
+    pledgedBy: pledgeByStaff ? staffRef(actor) : null,
+    dueDate: status === 'pledged' ? dueDateOf(input.dueDate) : null,
   });
 
   const updated = await adjustTotals(donation, 1);
@@ -149,11 +165,18 @@ export async function recordDonation(input, { source = 'app', status = 'pledged'
   broadcast('donation', { campaign: campaign.key, donation: view, stats: campaignStats(updated) });
   await logActivity({
     actor: actor || (userId ? { id: userId, role: 'public' } : null),
-    action: source === 'app' ? 'pledge' : source === 'sevak' ? 'collect' : 'create',
+    action: source === 'app' || pledgeByStaff ? 'pledge' : source === 'sevak' ? 'collect' : 'create',
     entity: 'donation',
     entityId: donation._id,
     label: donationLabel(donation),
-    note: source === 'app' ? 'Pledged in the app' : source === 'sevak' ? 'Receipt issued by a sevak' : 'Entered by an admin (approved)',
+    note:
+      source === 'app'
+        ? 'Pledged in the app'
+        : pledgeByStaff
+          ? 'Promise written down (payment pending)'
+          : source === 'sevak'
+            ? 'Receipt issued by a sevak'
+            : 'Entered by an admin (approved)',
   });
   return { donation: view, stats: campaignStats(updated), receiptToken: donation.receiptToken, doc: donation };
 }
@@ -166,8 +189,11 @@ const TRANSITIONS = {
   rejected: ['pledged', 'collected'], // restore (collected if it already had a receipt)
 };
 
-/** Moves a donation to a new status, issuing a receipt or reversing the totals as needed. */
-export async function transitionDonation(id, to, actor, { reason } = {}) {
+/**
+ * Moves a donation to a new status, issuing a receipt or reversing the totals as needed. `payMode`/`payRef`
+ * record how the money came in when a pledge is collected.
+ */
+export async function transitionDonation(id, to, actor, { reason, payMode, payRef } = {}) {
   const donation = await Donation.findById(id).select('+phone');
   if (!donation) throw new HttpError(404, 'Donation not found');
   if (donation.status === to) return donation;
@@ -179,10 +205,15 @@ export async function transitionDonation(id, to, actor, { reason } = {}) {
   const wasCounted = counted(donation.status);
   const now = new Date();
 
+  const payBefore = donation.payMode ?? null;
   if ((to === 'collected' || to === 'approved') && !donation.receiptNo) {
     donation.receiptNo = await nextReceiptNo();
     donation.collectedBy = staffRef(actor);
     donation.collectedAt = now;
+    if (!donation.material && payMode) {
+      donation.payMode = payMode;
+      donation.payRef = payRef || null;
+    }
   }
   if (to === 'approved') {
     donation.approvedBy = staffRef(actor);
@@ -206,7 +237,11 @@ export async function transitionDonation(id, to, actor, { reason } = {}) {
     entity: 'donation',
     entityId: donation._id,
     label: donationLabel(donation),
-    changes: [{ field: 'status', from, to }, ...(donation.receiptNo !== receiptBefore ? [{ field: 'receiptNo', from: receiptBefore, to: donation.receiptNo }] : [])],
+    changes: [
+      { field: 'status', from, to },
+      ...(donation.receiptNo !== receiptBefore ? [{ field: 'receiptNo', from: receiptBefore, to: donation.receiptNo }] : []),
+      ...((donation.payMode ?? null) !== payBefore ? [{ field: 'payMode', from: payBefore, to: donation.payMode }] : []),
+    ],
     note: to === 'rejected' ? reason || null : null,
   });
   return donation;
@@ -267,7 +302,9 @@ export async function updateDonation(id, input, actor) {
   d.village = village;
   d.amount = amount;
   d.material = material ? { gu: material, en: material } : null;
-  for (const k of ['phone', 'details', 'through', 'business', 'currentPlace']) if (k in input) d[k] = input[k] || null;
+  for (const k of ['phone', 'details', 'through', 'business', 'currentPlace', 'payMode', 'payRef']) if (k in input) d[k] = input[k] || null;
+  if (material) d.payMode = d.payRef = null;
+  if ('dueDate' in input) d.dueDate = dueDateOf(input.dueDate);
   if ('receiptNo' in input) d.receiptNo = input.receiptNo ?? null;
   try {
     await d.save();
@@ -313,7 +350,7 @@ export async function receiptData(donation) {
     Settings.findById('org'),
   ]);
   return {
-    donation: donationView(donation),
+    donation: { ...donationView(donation), payRef: donation.payRef ?? null }, // the slip prints the payment reference
     campaign: campaign && { id: campaign.key, label: campaign.label, poster: campaign.poster },
     village, // { key, kind, name, taluka, district }; name is empty for a taluka or district
     settings,

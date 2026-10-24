@@ -17,7 +17,7 @@ import {
   QuickLink,
   ROLES,
   Report,
-  STATUSES,
+  PAY_MODES, STATUSES,
   Settings,
   Sponsor,
   Taluka,
@@ -475,8 +475,11 @@ function donationFilter(q) {
   }
   if (q.q) {
     const text = q.q.trim().replace(/^#/, '');
-    if (/^\d{1,6}$/.test(text)) {
-      f.receiptNo = Number(text); // a short number is a receipt number (a mobile search needs 7+ digits)
+    // A short number is a receipt number (a mobile search needs 7+ digits); so is a printed one with a
+    // prefix or suffix such as "SSVJ/2026-27/0557" (its last group of digits).
+    const printed = /^\S+$/.test(text) && /[/-]/.test(text) && /(\d{1,7})\D*$/.exec(text);
+    if (/^\d{1,6}$/.test(text) || printed) {
+      f.receiptNo = Number(printed ? printed[1] : text);
     } else {
       const re = new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
       f.$or = [{ 'name.gu': re }, { 'name.en': re }, { phone: re }];
@@ -525,6 +528,8 @@ router.post(
         through: z.string().trim().max(80).optional(),
         business: z.string().trim().max(120).optional(),
         currentPlace: z.string().trim().max(60).optional(),
+        payMode: z.enum(PAY_MODES).optional(),
+        payRef: z.string().trim().max(40).optional(),
       })
       .refine((d) => d.amount || d.material, { message: 'amount or material is required' })
       .parse(req.body);
@@ -580,6 +585,9 @@ const donationEdit = z.object({
   business: optionalText(120),
   currentPlace: optionalText(60),
   receiptNo: nullableNumber(10_000_000),
+  payMode: z.preprocess((v) => (v === '' ? null : v), z.enum(PAY_MODES).nullable().optional()),
+  payRef: optionalText(40),
+  dueDate: z.preprocess((v) => (v === '' ? null : v), z.string().date().nullable().optional()), // promised payment day
   updatedAt: z.string().datetime({ offset: true }).optional(), // as loaded; a newer record means someone else changed it
 });
 

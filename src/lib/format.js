@@ -36,6 +36,7 @@ export function eventView(event) {
   return {
     ...e,
     day: p.day,
+    year: p.year,
     month: { gu: MONTHS_GU[p.month], en: MONTHS_EN[p.month] },
     time: {
       gu: `${dayPeriodGu(p.hour)} ${h12}:${p.minute} વાગ્યે`,
@@ -46,7 +47,9 @@ export function eventView(event) {
 
 /** First letter (grapheme cluster) of a name, so Gujarati conjuncts like "પ્ર" stay whole. */
 export function initialOf(name) {
+  // Skip an honorific, so "શ્રી રમેશભાઈ" gets "ર", not "શ્રી".
+  const bare = name.trim().replace(/^(શ્રીમતી|શ્રી|સ્વ\.|shri|shree|smt\.?)\s+/i, '') || name.trim();
   const seg = new Intl.Segmenter('gu', { granularity: 'grapheme' });
-  const first = seg.segment(name.trim())[Symbol.iterator]().next().value;
+  const first = seg.segment(bare)[Symbol.iterator]().next().value;
   return first ? first.segment : '?';
 }

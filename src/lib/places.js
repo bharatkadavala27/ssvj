@@ -41,18 +41,24 @@ export function clearPlaceCache() {
 export async function placeList() {
   // Read on every /home request, so kept in memory (single process); the admin routes clear it on
   // changes and it expires after 10 minutes for edits made by scripts such as import-places.
-  if (cached && Date.now() - cached.at < 10 * 60 * 1000) return cached.list;
-  const list = await loadPlaceList();
-  cached = { at: Date.now(), list };
-  return list;
+  return (await placeData()).list;
 }
 
-async function loadPlaceList() {
+/** The place list plus a version string that changes whenever a village, taluka or district changes. */
+export async function placeData() {
+  if (cached && Date.now() - cached.at < 10 * 60 * 1000) return cached;
   const [villages, talukas, districts] = await Promise.all([
     Village.find().sort({ order: 1 }).lean(),
     Taluka.find().sort({ district: 1, order: 1, 'name.en': 1 }).lean(),
     District.find().sort({ order: 1, 'name.en': 1 }).lean(),
   ]);
+  const all = [...villages, ...talukas, ...districts];
+  const latest = Math.max(0, ...all.map((p) => new Date(p.updatedAt || 0).getTime()));
+  cached = { at: Date.now(), list: buildPlaceList(villages, talukas, districts), version: `${all.length}-${latest}` };
+  return cached;
+}
+
+function buildPlaceList(villages, talukas, districts) {
   const districtName = new Map(districts.map((d) => [d.key, d.name]));
   return [
     ...villages.map((v) => ({ key: v.key, kind: 'village', name: v.name, sub: v.taluka || null, taluka: v.taluka, district: v.district, talukaKey: v.talukaKey })),

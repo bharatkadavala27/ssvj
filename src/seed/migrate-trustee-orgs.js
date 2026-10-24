@@ -68,7 +68,7 @@ const bhavanTrustees = [
   },
   {
     role: 'sabhya',
-    gu: 'શ્રી નાનજીભાઈ અરજણભાઈ કળથિય',
+    gu: 'શ્રી નાનજીભાઈ અરજણભાઈ કળથિયા',
     en: 'Shri Nanjibhai Arjanbhai Kalthiya',
     phone: '9909463368',
     order: 2,
@@ -82,7 +82,7 @@ const bhavanTrustees = [
   },
   {
     role: 'sabhya',
-    gu: 'શ્રી હરેશભાઈ ભગવાનજીભાઈ કોદાવલ',
+    gu: 'શ્રી હરેશભાઈ ભગવાનજીભાઈ કોદાવલા',
     en: 'Shri Hareshbhai Bhagwanjibhai Kodavala',
     phone: '6353134615',
     order: 4,

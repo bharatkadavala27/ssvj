@@ -6,6 +6,8 @@ const { Schema, model } = mongoose;
 export const ROLES = ['public', 'sevak', 'admin'];
 /** pledged: promised in the app · collected: cash taken by a sevak (receipt issued) · approved: verified by admin · rejected */
 export const STATUSES = ['pledged', 'collected', 'approved', 'rejected'];
+/** How the money came in, chosen when the receipt is issued. */
+export const PAY_MODES = ['cash', 'upi', 'cheque', 'bank'];
 
 /** Gujarat districts (જિલ્લા) and talukas (તાલુકા): reference lists villages are linked to. */
 const DistrictSchema = new Schema(
@@ -60,6 +62,8 @@ const CampaignSchema = new Schema(
       date: { type: Date, default: null },
       venue: { type: Localized, default: null },
     },
+    // The live-donation card counts down to this day ("N days to go"), e.g. the wedding day.
+    countdownTo: { type: Date, default: null },
     // Progress icon on the live-donation card: an uploaded image (any format) replaces the built-in icon.
     // style "photo" turns the image from grey to full colour as the total grows; "shape" fills a transparent
     // PNG/SVG's silhouette with the theme colour, like the built-in icons.
@@ -108,17 +112,25 @@ const DonationSchema = new Schema(
     approvedBy: { type: StaffRef, default: null },
     approvedAt: { type: Date, default: null },
     rejectReason: { type: String, default: null },
+    // Payment, recorded with the receipt; null for in-kind gifts and older records.
+    payMode: { type: String, enum: [...PAY_MODES, null], default: null },
+    payRef: { type: String, default: null, trim: true }, // UPI transaction id, cheque or bank reference
+    // A promise a sevak wrote down ("I'll pay next month"): who took it and the day the donor said they would pay.
+    pledgedBy: { type: StaffRef, default: null },
+    dueDate: { type: Date, default: null },
   },
   { timestamps: true, toJSON: jsonOptions, optimisticConcurrency: true },
 );
 DonationSchema.index({ campaign: 1, createdAt: -1 });
 DonationSchema.index({ village: 1 });
 DonationSchema.index({ 'collectedBy.id': 1, createdAt: -1 });
+DonationSchema.index({ 'pledgedBy.id': 1, createdAt: -1 }, { partialFilterExpression: { 'pledgedBy.id': { $type: 'objectId' } } });
 DonationSchema.index({ receiptNo: 1 }, { unique: true, partialFilterExpression: { receiptNo: { $type: 'number' } } });
 
 const EventSchema = new Schema(
   {
     title: { type: Localized, required: true },
+    description: { type: Localized, default: null }, // shown when the event is opened
     place: { type: Localized, required: true },
     date: { type: Date, required: true, index: true },
     photo: { type: String, default: null },
@@ -236,6 +248,23 @@ const SettingsSchema = new Schema(
     blessings: { type: [Localized], default: [] }, // header lines like "|| જય ભગીરથ ||"
     contacts: { type: [ContactSchema], default: [] },
     receiptFooter: { type: Localized, default: null },
+    // How receipt numbers are printed: prefix + number padded to `digits` + suffix ({FY}, {YYYY}, {YY} allowed).
+    receiptNumber: {
+      prefix: { type: String, default: '', trim: true, maxlength: 30 },
+      suffix: { type: String, default: '', trim: true, maxlength: 30 },
+      digits: { type: Number, default: 0, min: 0, max: 8 },
+    },
+    // Link added to messages shared from the app (Play Store page or website), e.g. campaign progress.
+    shareLink: { type: String, default: null, trim: true },
+    // The website (Netlify) address: the app downloads its UI updates (/ota/manifest.json) from there and
+    // links its privacy-policy and account-deletion pages.
+    webUrl: { type: String, default: null, trim: true, match: /^https?:\/\/[^\s/]+(\/\S*)?$/ },
+    // Newest Android app: older apps offer "Download update" in Profile → About (never automatically).
+    appUpdate: {
+      version: { type: String, default: null, trim: true, match: /^\d+(\.\d+){0,3}$/ },
+      url: { type: String, default: null, trim: true, match: /^https?:\/\/\S+$/ },
+      notes: { type: Localized, default: null }, // what's new
+    },
     // Optional photos in the thank-you poster's top corners (e.g. ભગીરથ દાદા, દાસારામ બાપા)
     posterImages: {
       left: { type: String, default: null },
@@ -338,6 +367,8 @@ const TrusteeOrgSchema = new Schema(
     key: { type: String, required: true, unique: true, lowercase: true, trim: true },
     name: { type: Localized, required: true },
     regNo: { type: Localized, default: null },
+    logo: { type: String, default: null }, // uploaded image: the organisation card and the board page
+    cover: { type: String, default: null }, // uploaded wide photo at the top of the board page
     order: { type: Number, default: 0 },
     active: { type: Boolean, default: true },
   },
@@ -445,6 +476,10 @@ const UserSchema = new Schema(
     villages: { type: [String], default: [] }, // sevak's assigned village keys
     active: { type: Boolean, default: true },
     lastLoginAt: { type: Date, default: null },
+    // App build last used (reported by the app on start and login) and when it was last opened.
+    appVersion: { type: String, default: null },
+    appPlatform: { type: String, default: null }, // android | ios | web
+    lastSeenAt: { type: Date, default: null },
   },
   { timestamps: true, toJSON: jsonOptions },
 );
